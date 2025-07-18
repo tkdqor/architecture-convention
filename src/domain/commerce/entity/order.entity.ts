@@ -75,6 +75,7 @@ export class Order extends AggregateRootEntity {
     this.updateTotalAmount(newItem);
   }
 
+  // 애그리거트의 불변식을 지키는 내부 메서드
   private updateTotalAmount(newItem: OrderItem): void {
     this.totalAmount += newItem.getPrice() * newItem.getQuantity();
   }
