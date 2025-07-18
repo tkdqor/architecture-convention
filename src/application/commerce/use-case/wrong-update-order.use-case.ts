@@ -1,8 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/commerce/repository/order.repository';
 
-@Injectable()
 export class WrongUpdateOrderUseCase {
   constructor(
     private dataSource: DataSource,

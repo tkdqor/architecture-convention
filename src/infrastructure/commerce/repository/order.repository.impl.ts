@@ -6,6 +6,10 @@ import { NotFoundOrderApplicationException } from '../../../common/exception/not
 
 @Injectable()
 export class OrderRepositoryImpl implements OrderRepository {
+  async save(entityManager: EntityManager, order: Order): Promise<Order> {
+    return await entityManager.getRepository(Order).save(order);
+  }
+
   async getById(entityManager: EntityManager, id: string): Promise<Order> {
     const order = await entityManager.getRepository(Order).findOne({
       where: { id: id },
