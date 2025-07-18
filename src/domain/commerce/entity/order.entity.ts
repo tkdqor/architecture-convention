@@ -79,4 +79,9 @@ export class Order extends AggregateRootEntity {
   private updateTotalAmount(newItem: OrderItem): void {
     this.totalAmount += newItem.getPrice() * newItem.getQuantity();
   }
+
+  // 애그리거트의 캡슐화를 깨뜨리는 메서드
+  public getItems(): OrderItem[] {
+    return this.items;
+  }
 }
