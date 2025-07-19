@@ -1,10 +1,15 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import SubDomainEntity from '../../common/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
 import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
+import { Order } from './order.entity';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
+  @ManyToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
+  order: Order; // TypeORM 관계 매핑을 위해 public으로 설정
+
   @IsString()
   @Column({ name: 'product_id' })
   private productId: string;
@@ -24,7 +29,7 @@ export class OrderItem extends SubDomainEntity {
   private quantity: number;
 
   static createOrderItem(
-    orderId: string,
+    order: Order,
     productId: string,
     productName: string,
     price: number,
@@ -58,6 +63,7 @@ export class OrderItem extends SubDomainEntity {
 
     // orderItem 생성
     const orderItem = new OrderItem();
+    orderItem.order = order;
     orderItem.productId = productId;
     orderItem.productName = productName;
     orderItem.price = price;
