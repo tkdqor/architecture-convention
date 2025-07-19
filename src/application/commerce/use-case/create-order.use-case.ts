@@ -14,6 +14,7 @@ export class CreateOrderUseCase {
   async execute(): Promise<Order> {
     const entityManager = this.dataSource.manager;
     const customerId = 'test';
+    // const order = new Order(); 불가능
     const order = Order.createOrder(customerId);
     return await this.orderRepository.save(entityManager, order);
   }
