@@ -65,15 +65,23 @@ export class OrderItem extends SubDomainEntity {
     return orderItem;
   }
 
-  getProductId() {
+  getId(): string {
+    return this.id;
+  }
+
+  getProductId(): string {
     return this.productId;
   }
 
-  getPrice() {
+  getProductName(): string {
+    return this.productName;
+  }
+
+  getPrice(): number {
     return this.price;
   }
 
-  getQuantity() {
+  getQuantity(): number {
     return this.quantity;
   }
 }

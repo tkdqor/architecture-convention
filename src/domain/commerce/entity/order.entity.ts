@@ -16,14 +16,14 @@ import { OrderItemAlreadyExistsDomainException } from '../../common/exception/or
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
   @IsString()
-  @Column()
+  @Column({ name: 'customer_id' })
   private customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem) // 단방향 관계 설정
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => OrderItem)
-  private items: OrderItem[] = [];
+  private items: OrderItem[];
 
   @IsEnum(OrderStatusEnum)
   @Column({
@@ -35,7 +35,7 @@ export class Order extends AggregateRootEntity {
 
   @IsNumber()
   @Min(0)
-  @Column({ type: 'bigint', comment: '총 주문 금액' })
+  @Column({ name: 'total_amount', type: 'bigint', comment: '총 주문 금액' })
   private totalAmount: number = 0; // 모든 품목의 총합과 일치해야 함
 
   // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
@@ -48,6 +48,7 @@ export class Order extends AggregateRootEntity {
     const order = new Order();
     order.customerId = customerId;
     order.status = OrderStatusEnum.PLACED;
+    order.items = [];
     return order;
   }
 
@@ -83,5 +84,21 @@ export class Order extends AggregateRootEntity {
   // 애그리거트의 캡슐화를 깨뜨리는 메서드
   public getItems(): OrderItem[] {
     return this.items;
+  }
+
+  public getId(): string {
+    return this.id;
+  }
+
+  public getCustomerId(): string {
+    return this.customerId;
+  }
+
+  public getTotalAmount(): number {
+    return this.totalAmount;
+  }
+
+  public getStatus(): OrderStatusEnum {
+    return this.status;
   }
 }

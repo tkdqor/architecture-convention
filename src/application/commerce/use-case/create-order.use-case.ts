@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/commerce/repository/order.repository';
 import { Order } from '../../../domain/commerce/entity/order.entity';
@@ -7,6 +7,7 @@ import { Order } from '../../../domain/commerce/entity/order.entity';
 export class CreateOrderUseCase {
   constructor(
     private dataSource: DataSource,
+    @Inject('OrderRepository')
     private readonly orderRepository: OrderRepository,
   ) {}
 

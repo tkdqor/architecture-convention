@@ -2,6 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { OrderResolver } from './interface/commerce/order.resolver';
+import { CreateOrderUseCase } from './application/commerce/use-case/create-order.use-case';
+import { OrderRepositoryImpl } from './infrastructure/commerce/repository/order.repository.impl';
+import { Order } from './domain/commerce/entity/order.entity';
+import { OrderItem } from './domain/commerce/entity/order-item.entity';
 
 @Module({
   imports: [
@@ -12,10 +19,23 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'test',
       password: 'test',
       database: 'test',
-      entities: [__dirname + '/../**/*.entity.{ts}'],
+      entities: [Order, OrderItem],
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true, // 자동으로 스키마 파일 생성
+      playground: true, // GraphQL Playground 활성화
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    OrderResolver,
+    CreateOrderUseCase,
+    {
+      provide: 'OrderRepository',
+      useClass: OrderRepositoryImpl,
+    },
+  ],
 })
 export class AppModule {}
