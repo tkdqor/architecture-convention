@@ -6,11 +6,11 @@ import { OrderItemValidationDomainException } from '../../common/exception/order
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
   @IsString()
-  @Column()
+  @Column({ name: 'product_id' })
   private productId: string;
 
   @IsString()
-  @Column()
+  @Column({ name: 'product_name' })
   private productName: string;
 
   @IsNumber()
@@ -24,6 +24,7 @@ export class OrderItem extends SubDomainEntity {
   private quantity: number;
 
   static createOrderItem(
+    orderId: string,
     productId: string,
     productName: string,
     price: number,

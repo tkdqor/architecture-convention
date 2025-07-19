@@ -9,6 +9,7 @@ import { CreateOrderUseCase } from './application/commerce/use-case/create-order
 import { OrderRepositoryImpl } from './infrastructure/commerce/repository/order.repository.impl';
 import { Order } from './domain/commerce/entity/order.entity';
 import { OrderItem } from './domain/commerce/entity/order-item.entity';
+import { CreateOrderItemUseCase } from './application/commerce/use-case/CreateOrderItemUseCase';
 
 @Module({
   imports: [
@@ -32,6 +33,11 @@ import { OrderItem } from './domain/commerce/entity/order-item.entity';
     AppService,
     OrderResolver,
     CreateOrderUseCase,
+    {
+      provide: 'OrderRepository',
+      useClass: OrderRepositoryImpl,
+    },
+    CreateOrderItemUseCase,
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
