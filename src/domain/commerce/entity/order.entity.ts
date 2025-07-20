@@ -75,6 +75,8 @@ export class Order extends AggregateRootEntity {
     );
     this.items.push(newItem);
     this.updateTotalAmount(newItem);
+
+    this.setStatus(OrderStatusEnum.PAID);
   }
 
   // 애그리거트의 불변식을 지키는 내부 메서드
@@ -100,5 +102,9 @@ export class Order extends AggregateRootEntity {
 
   public getStatus(): OrderStatusEnum {
     return this.status;
+  }
+
+  public setStatus(status: OrderStatusEnum): void {
+    this.status = status;
   }
 }
