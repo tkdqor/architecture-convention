@@ -17,7 +17,7 @@ import { OrderItemAlreadyExistsDomainException } from '../../common/exception/or
 export class Order extends AggregateRootEntity {
   @IsString()
   @Column({ name: 'customer_id' })
-  private customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
+  private readonly customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
 
   // TypeORM 관계 매핑 없이 수동 관리
   @IsArray()
@@ -39,14 +39,14 @@ export class Order extends AggregateRootEntity {
   private totalAmount: number = 0; // 모든 품목의 총합과 일치해야 함
 
   // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
-  protected constructor() {
+  protected constructor(customerId: string) {
     super();
+    this.customerId = customerId;
   }
 
   // 생성자 대신 static 메서드로 엔티티 생성
   static createOrder(customerId: string): Order {
-    const order = new Order();
-    order.customerId = customerId;
+    const order = new Order(customerId);
     order.status = OrderStatusEnum.PLACED;
     order.items = [];
     return order;
