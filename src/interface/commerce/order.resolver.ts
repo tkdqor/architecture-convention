@@ -3,6 +3,7 @@ import { CreateOrderUseCase } from '../../application/commerce/use-case/create-o
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
 import { CreateOrderItemUseCase } from '../../application/commerce/use-case/CreateOrderItemUseCase';
+import { CreateOrderGqlPayload } from './graphql/create-order.graphql';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
@@ -16,15 +17,15 @@ export class OrderResolver {
     return 'Hello GraphQL!';
   }
 
-  @Mutation(() => OrderGqlObject, { description: '주문 생성' })
-  async createOrder(): Promise<OrderGqlObject> {
+  @Mutation(() => CreateOrderGqlPayload, { description: '주문 생성' })
+  async createOrder(): Promise<CreateOrderGqlPayload> {
     const order = await this.createOrderUseCase.execute();
-    return OrderMapper.toGqlObject(order);
+    return OrderMapper.toCreateOrderGqlPayload(order);
   }
 
-  @Mutation(() => OrderGqlObject, { description: '주문 아이템 생성' })
-  async createOrderItem(): Promise<OrderGqlObject> {
+  @Mutation(() => CreateOrderGqlPayload, { description: '주문 아이템 생성' })
+  async createOrderItem(): Promise<CreateOrderGqlPayload> {
     const order = await this.createOrderItemUseCase.execute();
-    return OrderMapper.toGqlObject(order);
+    return OrderMapper.toCreateOrderGqlPayload(order);
   }
 }
