@@ -1,5 +1,5 @@
-import { Order } from '../../../domain/commerce/entity/order.entity';
-import { OrderItem } from '../../../domain/commerce/entity/order-item.entity';
+import { Order } from '../../../domain/commerce/entity/command/order.entity';
+import { OrderItem } from '../../../domain/commerce/entity/command/order-item.entity';
 import { OrderStatusEnum } from '../../../domain/commerce/commerce.enum';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {

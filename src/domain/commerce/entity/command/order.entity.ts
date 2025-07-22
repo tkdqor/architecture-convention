@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import AggregateRootEntity from '../../common/aggregate-root.entity';
+import AggregateRootEntity from '../../../common/aggregate-root.entity';
 import {
   IsArray,
   IsEnum,
@@ -10,8 +10,8 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
-import { OrderStatusEnum } from '../commerce.enum';
-import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
+import { OrderStatusEnum } from '../../commerce.enum';
+import { OrderItemAlreadyExistsDomainException } from '../../../common/exception/order-item-already-exists-domain-exception';
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
@@ -90,6 +90,18 @@ export class Order extends AggregateRootEntity {
 
   public getId(): string {
     return this.id;
+  }
+
+  public getCreatedAt(): Date {
+    return this.createdAt;
+  }
+
+  public getUpdatedAt(): Date {
+    return this.updatedAt;
+  }
+
+  public getDeletedAt(): Date | null {
+    return this.deletedAt;
   }
 
   public getCustomerId(): string {

@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
-import SubDomainEntity from '../../common/sub-domain.entity';
+import SubDomainEntity from '../../../common/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
-import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
+import { OrderItemValidationDomainException } from '../../../common/exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
 
 @Entity('convention_order_item')
@@ -72,23 +72,35 @@ export class OrderItem extends SubDomainEntity {
     return orderItem;
   }
 
-  getId(): string {
+  public getId(): string {
     return this.id;
   }
 
-  getProductId(): string {
+  public getCreatedAt(): Date {
+    return this.createdAt;
+  }
+
+  public getUpdatedAt(): Date {
+    return this.updatedAt;
+  }
+
+  public getDeletedAt(): Date | null {
+    return this.deletedAt;
+  }
+
+  public getProductId(): string {
     return this.productId;
   }
 
-  getProductName(): string {
+  public getProductName(): string {
     return this.productName;
   }
 
-  getPrice(): number {
+  public getPrice(): number {
     return this.price;
   }
 
-  getQuantity(): number {
+  public getQuantity(): number {
     return this.quantity;
   }
 }

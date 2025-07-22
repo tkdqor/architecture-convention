@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { Order } from '../entity/order.entity';
+import { Order } from '../../entity/command/order.entity';
 
 export interface OrderRepository {
   save(entityManager: EntityManager, order: Order): Promise<Order>;
