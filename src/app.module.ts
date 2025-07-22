@@ -9,7 +9,7 @@ import { CreateOrderUseCase } from './application/commerce/use-case/create-order
 import { OrderRepositoryImpl } from './infrastructure/commerce/repository/command/order.repository.impl';
 import { Order } from './domain/commerce/entity/command/order.entity';
 import { OrderItem } from './domain/commerce/entity/command/order-item.entity';
-import { CreateOrderItemUseCase } from './application/commerce/use-case/CreateOrderItemUseCase';
+import { CreateOrderItemUseCase } from './application/commerce/use-case/create-order-Item.use-case';
 
 @Module({
   imports: [

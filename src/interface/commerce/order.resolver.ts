@@ -2,7 +2,7 @@ import { Resolver, Mutation, Query } from '@nestjs/graphql';
 import { CreateOrderUseCase } from '../../application/commerce/use-case/create-order.use-case';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
-import { CreateOrderItemUseCase } from '../../application/commerce/use-case/CreateOrderItemUseCase';
+import { CreateOrderItemUseCase } from '../../application/commerce/use-case/create-order-Item.use-case';
 import { CreateOrderGqlPayload } from './graphql/create-order.graphql';
 
 @Resolver(() => OrderGqlObject)
