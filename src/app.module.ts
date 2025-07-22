@@ -5,11 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { OrderResolver } from './interface/commerce/order.resolver';
-import { CreateOrderUseCase } from './application/commerce/use-case/create-order.use-case';
+import { CreateOrderUseCase } from './application/commerce/use-case/command/create-order.use-case';
 import { OrderRepositoryImpl } from './infrastructure/commerce/repository/command/order.repository.impl';
 import { Order } from './domain/commerce/entity/command/order.entity';
 import { OrderItem } from './domain/commerce/entity/command/order-item.entity';
-import { CreateOrderItemUseCase } from './application/commerce/use-case/create-order-Item.use-case';
+import { CreateOrderItemUseCase } from './application/commerce/use-case/command/create-order-Item.use-case';
+import { GetOrderDetailUseCase } from './application/commerce/use-case/query/get-order-detail.use-case';
+import { OrderReadModelRepositoryImpl } from './infrastructure/commerce/repository/query/order-read-model.repository.impl';
 
 @Module({
   imports: [
@@ -41,6 +43,11 @@ import { CreateOrderItemUseCase } from './application/commerce/use-case/create-o
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
+    },
+    GetOrderDetailUseCase,
+    {
+      provide: 'OrderReadModelRepository',
+      useClass: OrderReadModelRepositoryImpl,
     },
   ],
 })

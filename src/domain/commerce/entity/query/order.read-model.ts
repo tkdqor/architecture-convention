@@ -11,7 +11,6 @@ export class OrderReadModel {
     public readonly itemCount: number,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
-    public readonly deletedAt: Date | null,
   ) {}
 
   // 리드모델 메서드 예시

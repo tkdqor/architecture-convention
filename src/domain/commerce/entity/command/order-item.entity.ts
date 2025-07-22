@@ -84,10 +84,6 @@ export class OrderItem extends SubDomainEntity {
     return this.updatedAt;
   }
 
-  public getDeletedAt(): Date | null {
-    return this.deletedAt;
-  }
-
   public getProductId(): string {
     return this.productId;
   }

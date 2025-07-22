@@ -6,6 +6,12 @@ import {
   CreateOrderGqlPayload,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
+import { OrderReadModel } from '../../../domain/commerce/entity/query/order.read-model';
+import {
+  GetOrderDetailGqlPayload,
+  GetOrderItemDetailGqlPayload,
+} from '../graphql/get-order.graphql';
+import { OrderItemReadModel } from '../../../domain/commerce/entity/query/order-item.read-model';
 
 export class OrderMapper {
   /**
@@ -63,5 +69,49 @@ export class OrderMapper {
       default:
         throw new Error(`Unknown order status: ${status}`);
     }
+  }
+
+  /**
+   * OrderReadModel를 GetOrderDetailGqlPayload로 변환
+   */
+  static toGetOrderDetailGqlPayload(
+    orderReadModel: OrderReadModel,
+  ): GetOrderDetailGqlPayload {
+    return new GetOrderDetailGqlPayload({
+      id: orderReadModel.id,
+      customerId: orderReadModel.customerId,
+      status: this.mapOrderStatusToGql(orderReadModel.status),
+      totalAmount: orderReadModel.totalAmount,
+      items: this.toGetOrderItemDetailGqlPayloads(orderReadModel.items),
+    });
+  }
+
+  /**
+   * OrderItemReadModel을 GetOrderItemDetailGqlPayload로 변환
+   */
+  static toGetOrderItemDetailGqlPayload(
+    orderItemReadModel: OrderItemReadModel,
+  ): GetOrderItemDetailGqlPayload {
+    return new GetOrderItemDetailGqlPayload({
+      id: orderItemReadModel.id,
+      orderId: orderItemReadModel.orderId,
+      productId: orderItemReadModel.productId,
+      price: orderItemReadModel.price,
+      quantity: orderItemReadModel.quantity,
+      totalAmount: orderItemReadModel.totalAmount,
+      createdAt: orderItemReadModel.createdAt,
+      updatedAt: orderItemReadModel.updatedAt,
+    });
+  }
+
+  /**
+   * OrderItemReadModel 배열을 GetOrderItemDetailGqlPayload 배열로 변환
+   */
+  static toGetOrderItemDetailGqlPayloads(
+    orderItemReadModels: OrderItemReadModel[],
+  ): GetOrderItemDetailGqlPayload[] {
+    return orderItemReadModels.map((orderItemReadModel) =>
+      this.toGetOrderItemDetailGqlPayload(orderItemReadModel),
+    );
   }
 }

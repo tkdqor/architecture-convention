@@ -100,10 +100,6 @@ export class Order extends AggregateRootEntity {
     return this.updatedAt;
   }
 
-  public getDeletedAt(): Date | null {
-    return this.deletedAt;
-  }
-
   public getCustomerId(): string {
     return this.customerId;
   }

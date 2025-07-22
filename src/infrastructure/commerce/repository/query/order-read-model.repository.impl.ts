@@ -79,7 +79,6 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
       items.length,
       orderEntity.getCreatedAt(),
       orderEntity.getUpdatedAt(),
-      orderEntity.getDeletedAt(),
     );
   }
 
@@ -90,19 +89,16 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
     orderItem: OrderItem,
     orderId: string,
   ): OrderItemReadModel {
-    const subtotal = orderItem.getPrice() * orderItem.getQuantity();
-
+    const totalAmount = orderItem.getPrice() * orderItem.getQuantity();
     return new OrderItemReadModel(
       orderItem.getId(),
       orderId,
       orderItem.getProductId(),
-      orderItem.getProductName(),
       orderItem.getPrice(),
       orderItem.getQuantity(),
-      subtotal,
+      totalAmount,
       orderItem.getCreatedAt(),
       orderItem.getUpdatedAt(),
-      orderItem.getDeletedAt(),
     );
   }
 }
