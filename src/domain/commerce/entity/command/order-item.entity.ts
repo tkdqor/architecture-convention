@@ -12,21 +12,21 @@ export class OrderItem extends SubDomainEntity {
 
   @IsString()
   @Column({ name: 'product_id' })
-  private productId: string;
+  productId: string;
 
   @IsString()
   @Column({ name: 'product_name' })
-  private productName: string;
+  productName: string;
 
   @IsNumber()
   @Min(0)
   @Column({ type: 'bigint', comment: '주문 상품 금액' })
-  private price: number;
+  price: number;
 
   @IsNumber()
   @Min(0)
   @Column({ type: 'bigint', comment: '주문 상품 수량' })
-  private quantity: number;
+  quantity: number;
 
   static createOrderItem(
     order: Order,
