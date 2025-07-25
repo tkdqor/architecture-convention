@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import AggregateRootEntity from '../../../common/aggregate-root.entity';
 import {
   IsArray,
@@ -19,11 +19,14 @@ export class Order extends AggregateRootEntity {
   @Column({ name: 'customer_id' })
   customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
 
-  // TypeORM 관계 매핑 없이 수동 관리
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
+    cascade: true,
+    eager: false,
+  })
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => OrderItem)
-  items: OrderItem[] = [];
+  items: OrderItem[];
 
   @IsEnum(OrderStatusEnum)
   @Column({

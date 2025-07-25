@@ -8,7 +8,7 @@ import { Order } from './order.entity';
 export class OrderItem extends SubDomainEntity {
   @ManyToOne(() => Order)
   @JoinColumn({ name: 'order_id' })
-  order: Order; // TypeORM 관계 매핑을 위해 public으로 설정
+  order: Order;
 
   @IsString()
   @Column({ name: 'product_id' })
