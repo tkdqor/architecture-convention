@@ -2,6 +2,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../../domain/commerce/repository/command/order.repository';
 import { Order } from '../../../../domain/commerce/entity/command/order.entity';
+import { CreateOrderUseCaseInput } from '../../use-case-input/create-order.use-case-input';
+import { OrderCommandMapper } from '../../../../domain/commerce/command/mapper/order-command.mapper';
 
 @Injectable()
 export class CreateOrderUseCase {
@@ -11,11 +13,11 @@ export class CreateOrderUseCase {
     private readonly orderRepository: OrderRepository,
   ) {}
 
-  async execute(): Promise<Order> {
+  async execute(ucInput: CreateOrderUseCaseInput): Promise<Order> {
+    const command = OrderCommandMapper.toCreateOrderCommand(ucInput);
     const entityManager = this.dataSource.manager;
-    const customerId = 'test';
     // const order = new Order(); 불가능
-    const order = Order.createOrder(customerId);
+    const order = Order.createOrder(command.customerId);
     return await this.orderRepository.save(entityManager, order);
   }
 }

@@ -3,7 +3,8 @@ import { OrderItem } from '../../../domain/commerce/entity/command/order-item.en
 import { OrderStatusEnum } from '../../../domain/commerce/commerce.enum';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
-  CreateOrderGqlPayload,
+  CreateOrderGqlInput,
+  CreateOrderGqlPayload, CreateOrderItemGqlInput,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
 import { OrderReadModel } from '../../../domain/commerce/entity/query/order.read-model';
@@ -12,8 +13,32 @@ import {
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
 import { OrderItemReadModel } from '../../../domain/commerce/entity/query/order-item.read-model';
+import { CreateOrderUseCaseInput } from '../../../application/commerce/use-case-input/create-order.use-case-input';
+import { CreateOrderItemUseCaseInput } from '../../../application/commerce/use-case-input/create-order-item.use-case-input';
 
 export class OrderMapper {
+  /**
+   * CreateOrderGqlInput을 CreateOrderUseCaseInput로 변환
+   */
+  static toCreateOrderUseCaseInput(
+    input: CreateOrderGqlInput,
+  ): CreateOrderUseCaseInput {
+    return new CreateOrderUseCaseInput({
+      customerId: input.customerId,
+    });
+  }
+
+  /**
+   * CreateOrderItemGqlInput을 CreateOrderItemUseCaseInput으로 변환
+   */
+  static toCreateOrderItemUseCaseInput(
+    input: CreateOrderItemGqlInput,
+  ): CreateOrderItemUseCaseInput {
+    return new CreateOrderItemUseCaseInput({
+      orderId: input.orderId,
+    });
+  }
+
   /**
    * Order 엔티티를 CreateOrderGqlPayload로 변환
    */

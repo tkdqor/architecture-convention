@@ -1,9 +1,12 @@
-import { Resolver, Mutation, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { CreateOrderUseCase } from '../../application/commerce/use-case/command/create-order.use-case';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
 import { CreateOrderItemUseCase } from '../../application/commerce/use-case/command/create-order-Item.use-case';
-import { CreateOrderGqlPayload } from './graphql/create-order.graphql';
+import {
+  CreateOrderGqlPayload,
+  CreateOrderGqlInput, CreateOrderItemGqlInput,
+} from './graphql/create-order.graphql';
 import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
 import { GetOrderDetailUseCase } from '../../application/commerce/use-case/query/get-order-detail.use-case';
 
@@ -16,14 +19,20 @@ export class OrderResolver {
   ) {}
 
   @Mutation(() => CreateOrderGqlPayload, { description: '주문 생성' })
-  async createOrder(): Promise<CreateOrderGqlPayload> {
-    const order = await this.createOrderUseCase.execute();
+  async createOrder(
+    @Args('input') input: CreateOrderGqlInput,
+  ): Promise<CreateOrderGqlPayload> {
+    const ucInput = OrderMapper.toCreateOrderUseCaseInput(input);
+    const order = await this.createOrderUseCase.execute(ucInput);
     return OrderMapper.toCreateOrderGqlPayload(order);
   }
 
   @Mutation(() => CreateOrderGqlPayload, { description: '주문 아이템 생성' })
-  async createOrderItem(): Promise<CreateOrderGqlPayload> {
-    const order = await this.createOrderItemUseCase.execute();
+  async createOrderItem(
+    @Args('input') input: CreateOrderItemGqlInput,
+  ): Promise<CreateOrderGqlPayload> {
+    const ucInput = OrderMapper.toCreateOrderItemUseCaseInput(input);
+    const order = await this.createOrderItemUseCase.execute(ucInput);
     return OrderMapper.toCreateOrderGqlPayload(order);
   }
 

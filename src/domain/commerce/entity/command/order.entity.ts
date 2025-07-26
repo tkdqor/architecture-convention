@@ -62,6 +62,11 @@ export class Order extends AggregateRootEntity {
     price: number,
     quantity: number,
   ): void {
+    // items가 undefined인 경우 빈 배열로 초기화
+    if (!this.items) {
+      this.items = [];
+    }
+
     const existingItem = this.items.find(
       (item) => item.getProductId() === productId,
     );

@@ -1,6 +1,23 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { Expose, plainToClass, Type } from 'class-transformer';
 import { OrderStatusGqlEnum } from './order.graphql';
+import { IsString } from 'class-validator';
+
+@InputType('CreateOrderInput')
+export class CreateOrderGqlInput {
+  @IsString()
+  @Expose()
+  @Field(() => ID, { description: '유저 ID' })
+  customerId: string;
+}
+
+@InputType('CreateOrderItemGqlInput')
+export class CreateOrderItemGqlInput {
+  @IsString()
+  @Expose()
+  @Field(() => ID, { description: '주문 ID' })
+  orderId: string;
+}
 
 @ObjectType('OrderItemGqlPayload')
 export class CreateOrderItemGqlPayload {
