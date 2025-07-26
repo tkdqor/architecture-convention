@@ -21,7 +21,7 @@ export class Order extends AggregateRootEntity {
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
     cascade: true,
-    eager: false,
+    eager: true,
   })
   @IsArray()
   @ValidateNested({ each: true })
