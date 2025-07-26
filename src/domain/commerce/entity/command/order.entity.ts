@@ -12,6 +12,7 @@ import { Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
 import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../../common/exception/order-item-already-exists-domain-exception';
+import { PaymentCardInfo } from '../../value-object/payment-card-info';
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
@@ -40,6 +41,9 @@ export class Order extends AggregateRootEntity {
   @Min(0)
   @Column({ name: 'total_amount', type: 'bigint', comment: '총 주문 금액' })
   totalAmount: number = 0; // 모든 품목의 총합과 일치해야 함
+
+  @Column(() => PaymentCardInfo, { prefix: false })
+  paymentCardInfo: PaymentCardInfo;
 
   // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
   protected constructor(customerId: string) {
@@ -122,5 +126,20 @@ export class Order extends AggregateRootEntity {
 
   public setStatus(status: OrderStatusEnum): void {
     this.status = status;
+  }
+
+  // 카드 결제 정보 추가
+  addPaymentCardInfo(
+    cardNumber: string,
+    cardHolder: string,
+    expiry: string,
+    cvc: string,
+  ): void {
+    this.paymentCardInfo = PaymentCardInfo.createPaymentCardInfo(
+      cardNumber,
+      cardHolder,
+      expiry,
+      cvc,
+    );
   }
 }

@@ -21,6 +21,8 @@ export class CreateOrderItemUseCase {
       command.orderId,
     );
     order.addItem('test', 'test', 1000, 2);
+    // 카드 결제 정보 추가(request로 결제 정보 받았다고 가정)
+    order.addPaymentCardInfo('1111-1111-1111-1111', 'asdf', '27/03', '333');
     return await this.orderRepository.save(entityManager, order);
   }
 }
