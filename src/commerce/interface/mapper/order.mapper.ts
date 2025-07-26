@@ -1,20 +1,20 @@
-import { Order } from '../../../domain/commerce/entity/command/order.entity';
-import { OrderItem } from '../../../domain/commerce/entity/command/order-item.entity';
-import { OrderStatusEnum } from '../../../domain/commerce/commerce.enum';
+import { Order } from '../../domain/entity/command/order.entity';
+import { OrderItem } from '../../domain/entity/command/order-item.entity';
+import { OrderStatusEnum } from '../../domain/commerce.enum';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,
   CreateOrderGqlPayload, CreateOrderItemGqlInput,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
-import { OrderReadModel } from '../../../domain/commerce/entity/query/order.read-model';
+import { OrderReadModel } from '../../domain/entity/query/order.read-model';
 import {
   GetOrderDetailGqlPayload,
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
-import { OrderItemReadModel } from '../../../domain/commerce/entity/query/order-item.read-model';
-import { CreateOrderUseCaseInput } from '../../../application/commerce/use-case-input/create-order.use-case-input';
-import { CreateOrderItemUseCaseInput } from '../../../application/commerce/use-case-input/create-order-item.use-case-input';
+import { OrderItemReadModel } from '../../domain/entity/query/order-item.read-model';
+import { CreateOrderUseCaseInput } from '../../application/use-case-input/create-order.use-case-input';
+import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
 
 export class OrderMapper {
   /**

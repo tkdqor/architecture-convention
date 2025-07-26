@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { OrderRepository } from '../../../../domain/commerce/repository/command/order.repository';
-import { Order } from '../../../../domain/commerce/entity/command/order.entity';
+import { OrderRepository } from '../../../domain/repository/command/order.repository';
+import { Order } from '../../../domain/entity/command/order.entity';
 import { CreateOrderItemUseCaseInput } from '../../use-case-input/create-order-item.use-case-input';
-import { OrderCommandMapper } from '../../../../domain/commerce/command/mapper/order-command.mapper';
+import { OrderCommandMapper } from '../../../domain/command/mapper/order-command.mapper';
 
 @Injectable()
 export class CreateOrderItemUseCase {

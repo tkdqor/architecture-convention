@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import AggregateRootEntity from '../../../common/aggregate-root.entity';
+import AggregateRootEntity from '../../common/aggregate-root.entity';
 import {
   IsArray,
   IsEnum,
@@ -11,7 +11,7 @@ import {
 import { Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
 import { OrderStatusEnum } from '../../commerce.enum';
-import { OrderItemAlreadyExistsDomainException } from '../../../common/exception/order-item-already-exists-domain-exception';
+import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../../value-object/payment-card-info';
 
 @Entity('convention_order')

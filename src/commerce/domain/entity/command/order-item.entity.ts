@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
-import SubDomainEntity from '../../../common/sub-domain.entity';
+import SubDomainEntity from '../../common/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
-import { OrderItemValidationDomainException } from '../../../common/exception/order-item-validation-domain-exception';
+import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
 
 @Entity('convention_order_item')

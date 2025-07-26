@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { OrderRepository } from '../../../../domain/commerce/repository/command/order.repository';
-import { Order } from 'src/domain/commerce/entity/command/order.entity';
-import { OrderItem } from 'src/domain/commerce/entity/command/order-item.entity';
+import { OrderRepository } from '../../../domain/repository/command/order.repository';
+import { Order } from 'src/commerce/domain/entity/command/order.entity';
+import { OrderItem } from 'src/commerce/domain/entity/command/order-item.entity';
 import { EntityManager } from 'typeorm';
 import { NotFoundOrderApplicationException } from '../../../../common/exception/not-found-order-application-exception';
 

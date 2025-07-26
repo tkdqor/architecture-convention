@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { OrderReadModel } from '../../../../domain/commerce/entity/query/order.read-model';
-import { OrderReadModelRepository } from '../../../../domain/commerce/repository/query/order-read-model.repository';
+import { OrderReadModel } from '../../../domain/entity/query/order.read-model';
+import { OrderReadModelRepository } from '../../../domain/repository/query/order-read-model.repository';
 
 @Injectable()
 export class GetOrderDetailUseCase {
