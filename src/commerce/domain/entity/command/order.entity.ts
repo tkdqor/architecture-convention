@@ -7,6 +7,8 @@ import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../../value-object/payment-card-info';
 import { Money } from '../../value-object/money';
+import { OrderPaidEvent } from '../../event/order-paid.event';
+import { DomainEvent } from '../../common/event/domain-event';
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
@@ -36,6 +38,8 @@ export class Order extends AggregateRootEntity {
 
   @Column(() => PaymentCardInfo, { prefix: false })
   paymentCardInfo: PaymentCardInfo;
+
+  domainEvents: DomainEvent[] = [];
 
   // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
   protected constructor(customerId: string) {
@@ -103,5 +107,28 @@ export class Order extends AggregateRootEntity {
       expiry,
       cvc,
     );
+
+    // 결제 완료 이벤트 발행
+    const orderPaidEvent = new OrderPaidEvent(
+      this.id,
+      this.totalAmount.value,
+      this.paymentCardInfo,
+    );
+    this.raiseEvent(orderPaidEvent);
+  }
+
+  // 도메인 이벤트 발행
+  raiseEvent(event: DomainEvent): void {
+    this.domainEvents.push(event);
+  }
+
+  // 발생한 이벤트 목록 조회
+  public getRaisedEventList(): DomainEvent[] {
+    return [...this.domainEvents];
+  }
+
+  // 이벤트 목록 초기화
+  public clearEvents(): void {
+    this.domainEvents = [];
   }
 }

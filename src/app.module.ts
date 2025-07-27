@@ -12,6 +12,7 @@ import { OrderItem } from './commerce/domain/entity/command/order-item.entity';
 import { CreateOrderItemUseCase } from './commerce/application/use-case/command/create-order-Item.use-case';
 import { GetOrderDetailUseCase } from './commerce/application/use-case/query/get-order-detail.use-case';
 import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/repository/query/order-read-model.repository.impl';
+import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/command/order-outbox.repository.impl';
 
 @Module({
   imports: [
@@ -43,6 +44,10 @@ import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/reposito
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
+    },
+    {
+      provide: 'OrderOutboxRepository',
+      useClass: OrderOutboxRepositoryImpl,
     },
     GetOrderDetailUseCase,
     {
