@@ -53,4 +53,13 @@ export class PaymentCardInfo {
       cvc,
     );
   }
+
+  equals(other: PaymentCardInfo): boolean {
+    const thisKeys = Object.keys(this);
+    const otherKeys = Object.keys(other);
+    if (thisKeys.length !== otherKeys.length) {
+      return false;
+    }
+    return thisKeys.every((key) => this[key] === other[key]);
+  }
 }
