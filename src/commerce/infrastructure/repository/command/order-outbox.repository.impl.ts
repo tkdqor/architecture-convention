@@ -1,7 +1,10 @@
 import { OrderOutboxRepository } from '../../../domain/repository/command/order-outbox.repository';
-import { EntityManager } from 'typeorm';
+import { EntityManager, FindOptionsOrder, FindOptionsWhere } from 'typeorm';
 import { DomainEvent } from '../../../domain/common/event/domain-event';
-import { OrderOutboxEntity } from '../../../domain/entity/command/order-outbox.entity';
+import {
+  OrderOutboxEntity,
+  OutboxStatus,
+} from '../../../domain/entity/command/order-outbox.entity';
 
 export class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   async save(
@@ -12,5 +15,49 @@ export class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
       OrderOutboxEntity.fromDomainEvent(event),
     );
     await entityManager.save(OrderOutboxEntity, outboxEntities);
+  }
+
+  async findPendingEvent(
+    entityManager: EntityManager,
+    eventType: string,
+  ): Promise<OrderOutboxEntity | null> {
+    const where: FindOptionsWhere<OrderOutboxEntity> = {
+      status: OutboxStatus.PENDING,
+    };
+    if (eventType) {
+      where.eventType = eventType;
+    }
+    return await entityManager.findOne(OrderOutboxEntity, {
+      where,
+      order: { createdAt: 'ASC' } as FindOptionsOrder<OrderOutboxEntity>,
+    });
+  }
+
+  async markAsPublished(
+    entityManager: EntityManager,
+    eventId: string,
+  ): Promise<void> {
+    await entityManager.update(
+      OrderOutboxEntity,
+      { eventId },
+      {
+        status: OutboxStatus.PUBLISHED,
+        updatedAt: new Date(),
+      },
+    );
+  }
+
+  async markAsFailed(
+    entityManager: EntityManager,
+    eventId: string,
+  ): Promise<void> {
+    await entityManager.update(
+      OrderOutboxEntity,
+      { eventId },
+      {
+        status: OutboxStatus.FAILED,
+        updatedAt: new Date(),
+      },
+    );
   }
 }

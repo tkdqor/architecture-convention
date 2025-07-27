@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ScheduleModule } from '@nestjs/schedule';
 import { OrderResolver } from './commerce/interface/order.resolver';
 import { CreateOrderUseCase } from './commerce/application/use-case/command/create-order.use-case';
 import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
@@ -13,9 +14,11 @@ import { CreateOrderItemUseCase } from './commerce/application/use-case/command/
 import { GetOrderDetailUseCase } from './commerce/application/use-case/query/get-order-detail.use-case';
 import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/repository/query/order-read-model.repository.impl';
 import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/command/order-outbox.repository.impl';
+import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-event-publisher'; // 클래스 이름 변경 반영
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -27,8 +30,8 @@ import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true, // 자동으로 스키마 파일 생성
-      playground: true, // GraphQL Playground 활성화
+      autoSchemaFile: true,
+      playground: true,
     }),
   ],
   controllers: [AppController],
@@ -54,6 +57,7 @@ import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/
       provide: 'OrderReadModelRepository',
       useClass: OrderReadModelRepositoryImpl,
     },
+    OutboxEventPublisher, // Outbox 이벤트 발행 서비스 이름 변경 반영
   ],
 })
 export class AppModule {}

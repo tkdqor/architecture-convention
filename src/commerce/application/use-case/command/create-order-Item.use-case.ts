@@ -5,6 +5,7 @@ import { Order } from '../../../domain/entity/command/order.entity';
 import { CreateOrderItemUseCaseInput } from '../../use-case-input/create-order-item.use-case-input';
 import { OrderCommandMapper } from '../../../domain/command/mapper/order-command.mapper';
 import { OrderOutboxRepository } from '../../../domain/repository/command/order-outbox.repository';
+import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher'; // 클래스 이름 변경 반영
 
 @Injectable()
 export class CreateOrderItemUseCase {
@@ -14,6 +15,7 @@ export class CreateOrderItemUseCase {
     private readonly orderRepository: OrderRepository,
     @Inject('OrderOutboxRepository')
     private readonly orderOutboxRepository: OrderOutboxRepository,
+    private readonly outboxEventPublisher: OutboxEventPublisher, // 주입 이름 및 타입 변경
   ) {}
 
   async execute(ucInput: CreateOrderItemUseCaseInput): Promise<Order> {
@@ -39,6 +41,12 @@ export class CreateOrderItemUseCase {
         // 이벤트 저장 후 엔티티에서 이벤트 목록 클리어
         order.clearEvents();
       }
+
+      // Outbox에 저장된 걸 확인 후 트리거 진행
+      // 트랜잭션이 커밋된 후에 실행되도록 setImmediate 사용
+      setImmediate(() => {
+        this.outboxEventPublisher.startPollingForOrderPaidEvents(); // 호출 클래스명 및 메서드 이름 변경 반영
+      });
 
       return savedOrder;
     });
