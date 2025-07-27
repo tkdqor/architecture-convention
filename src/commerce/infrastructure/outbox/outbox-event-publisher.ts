@@ -13,16 +13,12 @@ export class OutboxEventPublisher {
     private readonly orderOutboxRepository: OrderOutboxRepository,
   ) {}
 
-  public async startPollingForOrderPaidEvents(): Promise<void> {
-    await this.publishEventsOfType('OrderPaidEvent');
-  }
-
   // 매 30초마다 polling 진행
   // TODO: 현재는 event가 발행 완료되어도 계속 polling 진행됨
   @Cron('*/10 * * * * *')
   async backupPolling(): Promise<void> {
     this.logger.log('Running backup polling for missed events');
-    await this.startPollingForOrderPaidEvents();
+    await this.publishEventsOfType('OrderPaidEvent');
   }
 
   private async publishEventsOfType(eventType: string): Promise<void> {

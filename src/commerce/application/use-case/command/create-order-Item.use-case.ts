@@ -42,12 +42,6 @@ export class CreateOrderItemUseCase {
         order.clearEvents();
       }
 
-      // Outbox에 저장된 걸 확인 후 트리거 진행
-      // 트랜잭션이 커밋된 후에 실행되도록 setImmediate 사용
-      setImmediate(() => {
-        this.outboxEventPublisher.startPollingForOrderPaidEvents(); // 호출 클래스명 및 메서드 이름 변경 반영
-      });
-
       return savedOrder;
     });
   }
