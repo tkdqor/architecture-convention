@@ -110,7 +110,7 @@ export class Order extends AggregateRootEntity {
     this.totalAmount = this.totalAmount.add(itemTotal);
   }
 
-  // 카드 결제 정보 추가
+  // 카드 결제 정보 추가 >>> domain event 예시 코드 추가
   addPaymentCardInfo(
     cardNumber: string,
     cardHolder: string,
