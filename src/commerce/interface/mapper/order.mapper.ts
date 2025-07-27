@@ -4,7 +4,8 @@ import { OrderStatusEnum } from '../../domain/commerce.enum';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,
-  CreateOrderGqlPayload, CreateOrderItemGqlInput,
+  CreateOrderGqlPayload,
+  CreateOrderItemGqlInput,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
 import { OrderReadModel } from '../../domain/entity/query/order.read-model';
@@ -44,11 +45,11 @@ export class OrderMapper {
    */
   static toCreateOrderGqlPayload(order: Order): CreateOrderGqlPayload {
     return new CreateOrderGqlPayload({
-      id: order.getId(),
-      customerId: order.getCustomerId(),
-      status: this.mapOrderStatusToGql(order.getStatus()),
-      totalAmount: order.getTotalAmount(),
-      items: this.toCreateOrderItemGqlPayloads(order.getItems()),
+      id: order.id,
+      customerId: order.customerId,
+      status: this.mapOrderStatusToGql(order.status),
+      totalAmount: order.totalAmount.value,
+      items: this.toCreateOrderItemGqlPayloads(order.items),
     });
   }
 
@@ -59,11 +60,11 @@ export class OrderMapper {
     orderItem: OrderItem,
   ): CreateOrderItemGqlPayload {
     return new CreateOrderItemGqlPayload({
-      id: orderItem.getId(),
-      productId: orderItem.getProductId(),
-      productName: orderItem.getProductName(),
-      price: orderItem.getPrice(),
-      quantity: orderItem.getQuantity(),
+      id: orderItem.id,
+      productId: orderItem.productId,
+      productName: orderItem.productName,
+      price: orderItem.price.value,
+      quantity: orderItem.quantity,
     });
   }
 

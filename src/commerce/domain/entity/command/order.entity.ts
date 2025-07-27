@@ -1,18 +1,12 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import AggregateRootEntity from '../../common/aggregate-root.entity';
-import {
-  IsArray,
-  IsEnum,
-  IsNumber,
-  IsString,
-  Min,
-  ValidateNested,
-} from 'class-validator';
+import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
 import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../../value-object/payment-card-info';
+import { Money } from '../../value-object/money';
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
@@ -37,10 +31,8 @@ export class Order extends AggregateRootEntity {
   })
   status: OrderStatusEnum;
 
-  @IsNumber()
-  @Min(0)
-  @Column({ name: 'total_amount', type: 'bigint', comment: '총 주문 금액' })
-  totalAmount: number = 0; // 모든 품목의 총합과 일치해야 함
+  @Column(() => Money, { prefix: false })
+  totalAmount: Money; // 모든 품목의 총합과 일치해야 함
 
   @Column(() => PaymentCardInfo, { prefix: false })
   paymentCardInfo: PaymentCardInfo;
@@ -56,6 +48,7 @@ export class Order extends AggregateRootEntity {
     const order = new Order(customerId);
     order.status = OrderStatusEnum.PLACED;
     order.items = [];
+    order.totalAmount = Money.createMoney(0);
     return order;
   }
 
@@ -72,7 +65,7 @@ export class Order extends AggregateRootEntity {
     }
 
     const existingItem = this.items.find(
-      (item) => item.getProductId() === productId,
+      (item) => item.productId === productId,
     );
     if (existingItem) {
       throw new OrderItemAlreadyExistsDomainException(productId);
@@ -82,50 +75,19 @@ export class Order extends AggregateRootEntity {
       this,
       productId,
       productName,
-      price,
+      Money.createMoney(price),
       quantity,
     );
     this.items.push(newItem);
     this.updateTotalAmount(newItem);
 
-    this.setStatus(OrderStatusEnum.PAID);
+    this.status = OrderStatusEnum.PAID;
   }
 
   // 애그리거트의 불변식을 지키는 내부 메서드
   private updateTotalAmount(newItem: OrderItem): void {
-    this.totalAmount += newItem.getPrice() * newItem.getQuantity();
-  }
-
-  public getItems(): OrderItem[] {
-    return this.items;
-  }
-
-  public getId(): string {
-    return this.id;
-  }
-
-  public getCreatedAt(): Date {
-    return this.createdAt;
-  }
-
-  public getUpdatedAt(): Date {
-    return this.updatedAt;
-  }
-
-  public getCustomerId(): string {
-    return this.customerId;
-  }
-
-  public getTotalAmount(): number {
-    return this.totalAmount;
-  }
-
-  public getStatus(): OrderStatusEnum {
-    return this.status;
-  }
-
-  public setStatus(status: OrderStatusEnum): void {
-    this.status = status;
+    const itemTotal = newItem.price.multiply(newItem.quantity);
+    this.totalAmount = this.totalAmount.add(itemTotal);
   }
 
   // 카드 결제 정보 추가

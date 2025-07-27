@@ -66,19 +66,19 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
   ): OrderReadModel {
     // OrderItem Entity들을 OrderItemReadModel로 변환
     const items = orderItemEntities.map((item) =>
-      this.toOrderItemReadModel(item, orderEntity.getId()),
+      this.toOrderItemReadModel(item, orderEntity.id),
     );
 
     // Order Entity를 OrderReadModel로 변환
     return new OrderReadModel(
-      orderEntity.getId(),
-      orderEntity.getCustomerId(),
-      orderEntity.getStatus(),
-      orderEntity.getTotalAmount(),
+      orderEntity.id,
+      orderEntity.customerId,
+      orderEntity.status,
+      orderEntity.totalAmount.value,
       items,
       items.length,
-      orderEntity.getCreatedAt(),
-      orderEntity.getUpdatedAt(),
+      orderEntity.createdAt,
+      orderEntity.updatedAt,
     );
   }
 
@@ -89,16 +89,16 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
     orderItem: OrderItem,
     orderId: string,
   ): OrderItemReadModel {
-    const totalAmount = orderItem.getPrice() * orderItem.getQuantity();
+    const totalAmount = orderItem.price.value * orderItem.quantity;
     return new OrderItemReadModel(
-      orderItem.getId(),
+      orderItem.id,
       orderId,
-      orderItem.getProductId(),
-      orderItem.getPrice(),
-      orderItem.getQuantity(),
+      orderItem.productId,
+      orderItem.price.value,
+      orderItem.quantity,
       totalAmount,
-      orderItem.getCreatedAt(),
-      orderItem.getUpdatedAt(),
+      orderItem.createdAt,
+      orderItem.updatedAt,
     );
   }
 }

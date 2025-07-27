@@ -12,7 +12,7 @@ export class OrderRepositoryImpl implements OrderRepository {
     const savedOrder = await entityManager.getRepository(Order).save(order);
 
     // 2. OrderItem들도 함께 저장 (DDD 원칙: 애그리거트 루트가 내부 엔티티 저장 책임)
-    const orderItems = order.getItems();
+    const orderItems = order.items;
     for (const item of orderItems) {
       await entityManager.getRepository(OrderItem).save(item);
     }

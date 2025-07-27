@@ -13,7 +13,7 @@ export class WrongUpdateOrderUseCase {
     const orderId = 'test';
     const entityManager = this.dataSource.manager;
     const order = await this.orderRepository.getById(entityManager, orderId);
-    const orderItem = order.getItems()[0]; // Order 루트를 통하지 않고, 내부 OrderItem에 직접 접근
+    // const orderItem = order.getItems()[0]; // Order 루트를 통하지 않고, 내부 OrderItem에 직접 접근
     // orderItem.quantity = 10; // 직접 수량 변경 (불변식 위반)
     // orderItem.price = 10000; // 직접 가격 변경 (불변식 위반)
     // await orderItemRepository.save(entityManager, orderItem);

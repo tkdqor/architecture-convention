@@ -3,6 +3,7 @@ import SubDomainEntity from '../../common/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
 import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
+import { Money } from '../../value-object/money';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
@@ -18,10 +19,8 @@ export class OrderItem extends SubDomainEntity {
   @Column({ name: 'product_name' })
   productName: string;
 
-  @IsNumber()
-  @Min(0)
-  @Column({ type: 'bigint', comment: '주문 상품 금액' })
-  price: number;
+  @Column(() => Money, { prefix: false })
+  price: Money;
 
   @IsNumber()
   @Min(0)
@@ -32,7 +31,7 @@ export class OrderItem extends SubDomainEntity {
     order: Order,
     productId: string,
     productName: string,
-    price: number,
+    price: Money,
     quantity: number,
   ): OrderItem {
     // 필수 값 존재 여부 검사
@@ -53,7 +52,7 @@ export class OrderItem extends SubDomainEntity {
     }
 
     // 값의 유효성 검사
-    if (price < 0) {
+    if (price.value < 0) {
       throw new OrderItemValidationDomainException('price is not valid');
     }
 
@@ -70,33 +69,5 @@ export class OrderItem extends SubDomainEntity {
     orderItem.quantity = quantity;
 
     return orderItem;
-  }
-
-  public getId(): string {
-    return this.id;
-  }
-
-  public getCreatedAt(): Date {
-    return this.createdAt;
-  }
-
-  public getUpdatedAt(): Date {
-    return this.updatedAt;
-  }
-
-  public getProductId(): string {
-    return this.productId;
-  }
-
-  public getProductName(): string {
-    return this.productName;
-  }
-
-  public getPrice(): number {
-    return this.price;
-  }
-
-  public getQuantity(): number {
-    return this.quantity;
   }
 }
