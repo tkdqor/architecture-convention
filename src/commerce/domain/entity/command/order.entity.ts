@@ -1,8 +1,13 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import AggregateRootEntity from '../../common/aggregate-root.entity';
-import { IsArray, IsEnum, IsString, ValidateNested, validateSync } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsString,
+  ValidateNested,
+  validateSync,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { validate } from 'class-validator';
 import { OrderItem } from './order-item.entity';
 import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
