@@ -17,7 +17,6 @@ export class Order extends AggregateRootEntity {
   customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
-    cascade: true,
     eager: true,
   })
   @IsArray()
