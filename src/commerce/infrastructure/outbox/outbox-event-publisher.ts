@@ -18,6 +18,7 @@ export class OutboxEventPublisher {
   }
 
   // 매 30초마다 polling 진행
+  // TODO: 현재는 event가 발행 완료되어도 계속 polling 진행됨
   @Cron('*/10 * * * * *')
   async backupPolling(): Promise<void> {
     this.logger.log('Running backup polling for missed events');
@@ -45,7 +46,6 @@ export class OutboxEventPublisher {
           this.logger.log(
             `Publishing event: ${pendingEvent.eventType} for ${pendingEvent.eventId}`,
           );
-          // 예시: await this.messagePublisher.publish(event.eventData);
 
           // 3. 발행 성공 시 상태를 PUBLISHED로 변경
           await this.orderOutboxRepository.markAsPublished(
