@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import AggregateRootEntity from '../../common/aggregate-root.entity';
+import AggregateRootEntity from '../../common/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { EntityValidation } from '../../common/validation/entity-validation';
