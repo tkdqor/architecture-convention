@@ -1,7 +1,8 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import AggregateRootEntity from '../../common/aggregate-root.entity';
-import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEnum, IsString, ValidateNested, validateSync } from 'class-validator';
 import { Type } from 'class-transformer';
+import { validate } from 'class-validator';
 import { OrderItem } from './order-item.entity';
 import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
@@ -52,7 +53,25 @@ export class Order extends AggregateRootEntity {
     order.status = OrderStatusEnum.PLACED;
     order.items = [];
     order.totalAmount = Money.createMoney(0);
+    // 타입 검증 진행
+    order.validateOrder();
     return order;
+  }
+
+  // 검증 로직을 분리한 private 메서드
+  private validateOrder() {
+    // 검증을 위한 검증용 객체 생성 (Object.assign 사용)
+    const validationObject = Object.assign(new Order(''), this);
+
+    // class-validator로 검증 실행
+    const errors = validateSync(validationObject);
+    if (errors.length > 0) {
+      const errorMessages = errors
+        .map((error) => Object.values(error.constraints || {}))
+        .flat()
+        .join(', ');
+      throw new Error(`Order validation failed: ${errorMessages}`);
+    }
   }
 
   // 애그리거트 루트를 통한 OrderItem 추가 (일관성 유지)

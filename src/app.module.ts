@@ -10,6 +10,7 @@ import { CreateOrderUseCase } from './commerce/application/use-case/command/crea
 import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
 import { Order } from './commerce/domain/entity/command/order.entity';
 import { OrderItem } from './commerce/domain/entity/command/order-item.entity';
+import { OrderOutboxEntity } from './commerce/domain/entity/command/order-outbox.entity';
 import { CreateOrderItemUseCase } from './commerce/application/use-case/command/create-order-Item.use-case';
 import { GetOrderDetailUseCase } from './commerce/application/use-case/query/get-order-detail.use-case';
 import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/repository/query/order-read-model.repository.impl';
@@ -26,7 +27,7 @@ import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-ev
       username: 'test',
       password: 'test',
       database: 'test',
-      entities: [Order, OrderItem],
+      entities: [Order, OrderItem, OrderOutboxEntity],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
