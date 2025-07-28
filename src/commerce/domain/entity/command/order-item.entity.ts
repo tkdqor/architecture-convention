@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  JoinColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import SubDomainEntity from '../../common/entity/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
 import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
