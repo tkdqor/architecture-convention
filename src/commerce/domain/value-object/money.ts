@@ -7,6 +7,8 @@ export class Money {
   @Column({ name: 'amount', type: 'bigint', comment: '금액' })
   value: number;
 
+  protected constructor() {}
+
   static createMoney(value: number): Money {
     if (value < 0) {
       throw new Error('Money value cannot be negative.');

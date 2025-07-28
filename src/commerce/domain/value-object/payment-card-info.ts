@@ -13,6 +13,8 @@ export class PaymentCardInfo {
   @Column({ type: 'varchar', length: 4 })
   cvc: string;
 
+  protected constructor() {}
+
   static createPaymentCardInfo(
     cardNumber: string,
     cardHolder: string,
