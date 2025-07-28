@@ -5,7 +5,7 @@ import { Order } from '../../../domain/entity/command/order.entity';
 import { CreateOrderItemUseCaseInput } from '../../use-case-input/create-order-item.use-case-input';
 import { OrderCommandMapper } from '../../../domain/command/mapper/order-command.mapper';
 import { OrderOutboxRepository } from '../../../domain/repository/command/order-outbox.repository';
-import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher'; // 클래스 이름 변경 반영
+import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher';
 
 @Injectable()
 export class CreateOrderItemUseCase {
@@ -43,6 +43,22 @@ export class CreateOrderItemUseCase {
       }
 
       return savedOrder;
+
+      // TODO: 로그 메시지를 MDException과 DomainException을 나눈 케이스
+      // try {
+      //   // ...
+      // } catch (error) {
+      //   // instanceof로 예외 타입 구분하여 로깅
+      //   if (error instanceof DomainException) {
+      //     this.logger.error(error.getLogMessage());
+      //     // 출력: [DOMAIN-EXCEPTION] ORDER_ITEM_ALREADY_EXISTS | order item with id test already exists
+      //   } else if (error instanceof MDException) {
+      //     this.logger.warn(error.getLogMessage());
+      //     // 출력: [MD-EXCEPTION] Some general error message
+      //   } else {
+      //     this.logger.error(`[UNEXPECTED-ERROR] ${error.message}`, error.stack);
+      //   }
+      // }
     });
   }
 }

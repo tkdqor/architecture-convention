@@ -15,6 +15,10 @@ export class MDException extends HttpException {
       errorCode: errorCode ?? ErrorCode.UNKNOWN,
     };
   }
+
+  getLogMessage(): string {
+    return `[MD-EXCEPTION] ${this.message}`;
+  }
 }
 
 export enum ErrorCode {
