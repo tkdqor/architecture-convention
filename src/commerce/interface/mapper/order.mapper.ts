@@ -1,6 +1,8 @@
-import { Order } from '../../domain/entity/command/order.entity';
+import {
+  Order,
+  OrderStatusEnum,
+} from '../../domain/entity/command/order.entity';
 import { OrderItem } from '../../domain/entity/command/order-item.entity';
-import { OrderStatusEnum } from '../../domain/commerce.enum';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,

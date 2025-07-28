@@ -28,6 +28,8 @@ import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-ev
       password: 'test',
       database: 'test',
       entities: [Order, OrderItem, OrderOutboxEntity],
+      logging: true, // 모든 SQL 쿼리 로깅
+      logger: 'advanced-console', // 콘솔에 상세한 로그 출력
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

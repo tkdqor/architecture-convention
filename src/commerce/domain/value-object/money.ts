@@ -10,6 +10,7 @@ export class Money {
   protected constructor() {}
 
   static createMoney(value: number): Money {
+    // TODO: 여기서도 class-validator 동작시키기?
     if (value < 0) {
       throw new Error('Money value cannot be negative.');
     }
@@ -32,6 +33,7 @@ export class Money {
     return Money.createMoney(this.value * quantity);
   }
 
+  // TODO: equals 되는지 확인!
   equals(other: Money): boolean {
     const thisKeys = Object.keys(this);
     const otherKeys = Object.keys(other);

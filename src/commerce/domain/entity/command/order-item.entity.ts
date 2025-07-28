@@ -1,13 +1,18 @@
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import SubDomainEntity from '../../common/entity/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
 import { OrderItemValidationDomainException } from '../../common/exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
 import { Money } from '../../value-object/money';
 import { EntityValidation } from '../../common/validation/entity-validation';
+import { Expose } from 'class-transformer';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
+  @Expose()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @ManyToOne(() => Order)
   @JoinColumn({ name: 'order_id' })
   order: Order;

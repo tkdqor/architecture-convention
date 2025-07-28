@@ -1,8 +1,6 @@
 import { CreateOrderUseCaseInput } from '../../../application/use-case-input/create-order.use-case-input';
 import { CreateOrderCommand } from '../create-order.command';
-import {
-  CreateOrderItemUseCaseInput
-} from '../../../application/use-case-input/create-order-item.use-case-input';
+import { CreateOrderItemUseCaseInput } from '../../../application/use-case-input/create-order-item.use-case-input';
 import { CreateOrderItemCommand } from '../create-order-item.command';
 
 export class OrderCommandMapper {

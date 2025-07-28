@@ -13,7 +13,7 @@ export class OutboxEventPublisher {
     private readonly orderOutboxRepository: OrderOutboxRepository,
   ) {}
 
-  // 매 30초마다 polling 진행
+  // 매 10초마다 polling 진행
   // TODO: 현재는 event가 발행 완료되어도 계속 polling 진행됨
   @Cron('*/10 * * * * *')
   async backupPolling(): Promise<void> {

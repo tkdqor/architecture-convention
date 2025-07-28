@@ -15,7 +15,7 @@ export class CreateOrderItemUseCase {
     private readonly orderRepository: OrderRepository,
     @Inject('OrderOutboxRepository')
     private readonly orderOutboxRepository: OrderOutboxRepository,
-    private readonly outboxEventPublisher: OutboxEventPublisher, // 주입 이름 및 타입 변경
+    private readonly outboxEventPublisher: OutboxEventPublisher,
   ) {}
 
   async execute(ucInput: CreateOrderItemUseCaseInput): Promise<Order> {
@@ -35,6 +35,7 @@ export class CreateOrderItemUseCase {
 
       const savedOrder = await this.orderRepository.save(entityManager, order);
 
+      // TODO: 공통로직? 인프라 레이어에서 진행? ex. orderReposiotry.save 진행할 때 진행? ex) AOP 어노테이션?
       // 도메인 이벤트를 Outbox에 저장
       if (domainEvents.length > 0) {
         await this.orderOutboxRepository.save(entityManager, domainEvents);
@@ -49,7 +50,7 @@ export class CreateOrderItemUseCase {
       //   // ...
       // } catch (error) {
       //   // instanceof로 예외 타입 구분하여 로깅
-      //   if (error instanceof DomainException) {
+      //   if (error instanceof ApplicationException) {
       //     this.logger.error(error.getLogMessage());
       //     // 출력: [DOMAIN-EXCEPTION] ORDER_ITEM_ALREADY_EXISTS | order item with id test already exists
       //   } else if (error instanceof MDException) {

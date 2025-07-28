@@ -1,18 +1,27 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import AggregateRootEntity from '../../common/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { EntityValidation } from '../../common/validation/entity-validation';
 import { OrderItem } from './order-item.entity';
-import { OrderStatusEnum } from '../../commerce.enum';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../../value-object/payment-card-info';
 import { Money } from '../../value-object/money';
 import { OrderPaidEvent } from '../../event/order-paid.event';
 import { DomainEvent } from '../../common/event/domain-event';
 
+export enum OrderStatusEnum {
+  PLACED = 'PLACED',
+  PAID = 'PAID',
+  REFUNDED = 'REFUNDED',
+}
+
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
+  @Expose()
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @IsString()
   @Column({ name: 'customer_id' })
   customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
@@ -45,10 +54,13 @@ export class Order extends AggregateRootEntity {
   protected constructor(customerId: string) {
     super();
     this.customerId = customerId;
+    // TODO: 여기서도 validateSync도 가능할듯!
   }
 
   // 생성자 대신 static 메서드로 엔티티 생성
   static createOrder(customerId: string): Order {
+    // TODO: 모든 필드가 아닌 생성할 때의 필드을 기준으로 검증 필요!
+    // TODO: plain 다시 한 번 알아보기
     const order = new Order(customerId);
     order.status = OrderStatusEnum.PLACED;
     order.items = [];

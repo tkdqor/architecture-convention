@@ -13,33 +13,27 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
     entityManager: EntityManager,
     id: string,
   ): Promise<OrderReadModel> {
-    // Order만 먼저 조회
-    const orderEntity = await entityManager
-      .createQueryBuilder(Order, 'order')
-      .where('order.id = :id', { id })
-      .getOne();
+    // eager: true 설정이 실제로 어떻게 동작하는지 확인
+    const orderEntity = await entityManager.findOne(Order, {
+      where: { id },
+    });
 
     if (!orderEntity) {
       throw new NotFoundOrderApplicationException(id);
     }
 
-    // 2. 해당 Order의 OrderItem들을 별도로 조회
-    const orderItemEntities = await entityManager
-      .createQueryBuilder(OrderItem, 'orderItem')
-      .where('orderItem.order_id = :orderId', { orderId: id })
-      .getMany();
-
-    // Entity를 ReadModel로 변환
-    return this.toOrderReadModel(orderEntity, orderItemEntities);
+    // Entity를 ReadModel로 변환 (eager: true로 인해 orderEntity.items가 자동으로 로드됨)
+    return this.toOrderReadModel(orderEntity, orderEntity.items);
   }
 
   async findById(
     entityManager: EntityManager,
     id: string,
   ): Promise<OrderReadModel | null> {
-    // Order만 먼저 조회
+    // eager: true 설정으로 Order와 OrderItem을 한 번에 조회
     const orderEntity = await entityManager
       .createQueryBuilder(Order, 'order')
+      .leftJoinAndSelect('order.items', 'orderItem') // eager 관계를 명시적으로 조인
       .where('order.id = :id', { id })
       .getOne();
 
@@ -47,14 +41,8 @@ export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {
       return null;
     }
 
-    // 2. 해당 Order의 OrderItem들을 별도로 조회
-    const orderItemEntities = await entityManager
-      .createQueryBuilder(OrderItem, 'orderItem')
-      .where('orderItem.order_id = :orderId', { orderId: id })
-      .getMany();
-
-    // Entity를 ReadModel로 변환
-    return this.toOrderReadModel(orderEntity, orderItemEntities);
+    // Entity를 ReadModel로 변환 (OrderItem은 order.items에 이미 포함됨)
+    return this.toOrderReadModel(orderEntity, orderEntity.items);
   }
 
   /**
