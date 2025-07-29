@@ -24,8 +24,8 @@ export class OrderResolver {
     @Args('input') input: CreateOrderGqlInput,
   ): Promise<CreateOrderGqlPayload> {
     const ucInput = OrderMapper.toCreateOrderUseCaseInput(input);
-    const order = await this.createOrderUseCase.execute(ucInput);
-    return OrderMapper.toCreateOrderGqlPayload(order);
+    const orderResponse = await this.createOrderUseCase.execute(ucInput);
+    return OrderMapper.toCreateOrderGqlPayload(orderResponse);
   }
 
   @Mutation(() => CreateOrderGqlPayload, { description: '주문 아이템 생성' })

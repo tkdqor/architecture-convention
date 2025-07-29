@@ -18,6 +18,7 @@ import {
 import { OrderItemReadModel } from '../../domain/readmodel/order-item.read-model';
 import { CreateOrderUseCaseInput } from '../../application/use-case-input/create-order.use-case-input';
 import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
+import { Money } from '../../domain/value-object/money';
 
 export class OrderMapper {
   /**
@@ -45,13 +46,20 @@ export class OrderMapper {
   /**
    * Order 엔티티를 CreateOrderGqlPayload로 변환
    */
-  static toCreateOrderGqlPayload(order: Order): CreateOrderGqlPayload {
+  static toCreateOrderGqlPayload(response: {
+    id: string;
+    customerId: string;
+    status: OrderStatusEnum;
+    totalAmount: Money;
+    items: OrderItem[];
+    createdAt: Date;
+  }): CreateOrderGqlPayload {
     return new CreateOrderGqlPayload({
-      id: order.id,
-      customerId: order.customerId,
-      status: this.mapOrderStatusToGql(order.status),
-      totalAmount: order.totalAmount.value,
-      items: this.toCreateOrderItemGqlPayloads(order.items),
+      id: response.id,
+      customerId: response.customerId,
+      status: this.mapOrderStatusToGql(response.status),
+      totalAmount: response.totalAmount.value,
+      items: this.toCreateOrderItemGqlPayloads(response.items),
     });
   }
 
