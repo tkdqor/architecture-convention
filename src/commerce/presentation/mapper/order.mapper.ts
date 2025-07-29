@@ -10,12 +10,12 @@ import {
   CreateOrderItemGqlInput,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
-import { OrderReadModel } from '../../domain/readmodel/order.read-model';
+import { OrderReadModel } from '../../infrastructure/readmodel/order.read-model';
 import {
   GetOrderDetailGqlPayload,
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
-import { OrderItemReadModel } from '../../domain/readmodel/order-item.read-model';
+import { OrderItemReadModel } from '../../infrastructure/readmodel/order-item.read-model';
 import { CreateOrderCommand } from '../../application/use-case-input/create-order.command';
 import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
 import { Money } from '../../domain/value-object/money';

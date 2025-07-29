@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
-import { OrderReadModelRepository } from '../../../domain/repository/query/order-read-model.repository';
-import { OrderReadModel } from '../../../domain/readmodel/order.read-model';
-import { OrderItemReadModel } from '../../../domain/readmodel/order-item.read-model';
+import { OrderReadModelRepository } from './order-read-model.repository';
+import { OrderReadModel } from '../../readmodel/order.read-model';
+import { OrderItemReadModel } from '../../readmodel/order-item.read-model';
 import { Order } from '../../../domain/entity/order.entity';
 import { OrderItem } from '../../../domain/entity/order-item.entity';
 import { NotFoundOrderApplicationException } from '../../../../common/exception/not-found-order-application-exception';
