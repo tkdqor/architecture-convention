@@ -16,8 +16,8 @@ import {
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
 import { OrderItemReadModel } from '../../infrastructure/readmodel/order-item.read-model';
-import { CreateOrderCommand } from '../../application/use-case-input/create-order.command';
-import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
+import { CreateOrderCommand } from '../../application/command/dto/create-order.command';
+import { CreateOrderItemUseCaseInput } from '../../application/command/dto/create-order-item.use-case-input';
 import { Money } from '../../domain/value-object/money';
 
 export class OrderMapper {

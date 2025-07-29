@@ -1,4 +1,4 @@
-import { plainToClassWithValidation } from '../../../common/utils';
+import { plainToClassWithValidation } from '../../../../common/utils';
 import { IsString } from 'class-validator';
 import { Expose } from 'class-transformer';
 

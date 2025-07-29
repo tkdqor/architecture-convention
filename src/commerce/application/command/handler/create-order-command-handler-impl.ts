@@ -2,10 +2,10 @@ import { Injectable, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order, OrderStatusEnum } from '../../../domain/entity/order.entity';
-import { CreateOrderCommand } from '../../use-case-input/create-order.command';
+import { CreateOrderCommand } from '../dto/create-order.command';
 import { Money } from '../../../domain/value-object/money';
 import { OrderItem } from '../../../domain/entity/order-item.entity';
-import { CreateOrderICommandHandler } from './handler/create-order-i-command-handler';
+import { CreateOrderICommandHandler } from './create-order-i-command-handler';
 
 @Injectable()
 export class CreateOrderCommandHandlerImpl

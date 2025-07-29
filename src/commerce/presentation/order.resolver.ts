@@ -1,15 +1,15 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
-import { CreateOrderItemUseCase } from '../application/use-case/command/create-order-Item.use-case';
+import { CreateOrderItemUseCase } from '../application/command/handler/create-order-Item.use-case';
 import {
   CreateOrderGqlPayload,
   CreateOrderGqlInput,
   CreateOrderItemGqlInput,
 } from './graphql/create-order.graphql';
 import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
-import { GetOrderDetailUseCase } from '../application/use-case/query/get-order-detail.use-case';
-import { CreateOrderICommandHandler } from '../application/use-case/command/handler/create-order-i-command-handler';
+import { GetOrderDetailUseCase } from '../application/query/handler/get-order-detail.use-case';
+import { CreateOrderICommandHandler } from '../application/command/handler/create-order-i-command-handler';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
