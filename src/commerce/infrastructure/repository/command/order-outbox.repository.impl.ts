@@ -1,4 +1,4 @@
-import { OrderOutboxRepository } from '../../../domain/repository/command/order-outbox.repository';
+import { OrderOutboxRepository } from '../../../domain/repository/order-outbox.repository';
 import { EntityManager, FindOptionsOrder, FindOptionsWhere } from 'typeorm';
 import { DomainEvent } from '../../../domain/common/event/domain-event';
 import {

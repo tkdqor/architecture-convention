@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { OrderRepository } from '../../../domain/repository/command/order.repository';
+import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order, OrderStatusEnum } from '../../../domain/entity/order.entity';
 import { CreateOrderCommand } from '../../use-case-input/create-order.command';
 import { Money } from '../../../domain/value-object/money';

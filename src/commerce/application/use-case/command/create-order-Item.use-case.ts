@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { OrderRepository } from '../../../domain/repository/command/order.repository';
+import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from '../../../domain/entity/order.entity';
 import { CreateOrderItemUseCaseInput } from '../../use-case-input/create-order-item.use-case-input';
 import { OrderCommandMapper } from '../../../domain/command/mapper/order-command.mapper';
-import { OrderOutboxRepository } from '../../../domain/repository/command/order-outbox.repository';
+import { OrderOutboxRepository } from '../../../domain/repository/order-outbox.repository';
 import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher';
 
 @Injectable()

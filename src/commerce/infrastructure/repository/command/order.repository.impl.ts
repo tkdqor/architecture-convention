@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OrderRepository } from '../../../domain/repository/command/order.repository';
+import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from 'src/commerce/domain/entity/order.entity';
 import { OrderItem } from 'src/commerce/domain/entity/order-item.entity';
 import { EntityManager } from 'typeorm';

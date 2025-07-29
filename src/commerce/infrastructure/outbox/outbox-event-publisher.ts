@@ -1,7 +1,7 @@
 import { Injectable, Logger, Inject } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { DataSource } from 'typeorm';
-import { OrderOutboxRepository } from '../../domain/repository/command/order-outbox.repository';
+import { OrderOutboxRepository } from '../../domain/repository/order-outbox.repository';
 
 @Injectable()
 export class OutboxEventPublisher {
