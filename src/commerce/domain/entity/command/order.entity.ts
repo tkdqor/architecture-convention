@@ -51,25 +51,19 @@ export class Order extends AggregateRootEntity {
   domainEvents: DomainEvent[] = [];
 
   // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
-  protected constructor(customerId: string) {
+  protected constructor() {
     super();
-    this.customerId = customerId;
-    // TODO: 여기서도 validateSync도 가능할듯!
   }
 
   // 생성자 대신 static 메서드로 엔티티 생성
   static createOrder(customerId: string): Order {
-    // TODO: 모든 필드가 아닌 생성할 때의 필드을 기준으로 검증 필요!
-    // TODO: plain 다시 한 번 알아보기
-    const order = new Order(customerId);
+    const order = new Order();
     order.status = OrderStatusEnum.PLACED;
     order.items = [];
     order.totalAmount = Money.createMoney(0);
+    order.customerId = customerId;
     // 타입 검증 진행
-    EntityValidation.validate(
-      order,
-      () => new Order(''), // 빈 인스턴스 생성 함수
-    );
+    EntityValidation.validate(order, () => new Order());
     return order;
   }
 
