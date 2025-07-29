@@ -1,4 +1,4 @@
-import { ApplicationException } from './application-exception';
+import { ApplicationException } from '../../../../common/exception/application-exception';
 
 export class NotFoundOrderApplicationException extends ApplicationException {
   readonly code = 'NOT_FOUND_ORDER';

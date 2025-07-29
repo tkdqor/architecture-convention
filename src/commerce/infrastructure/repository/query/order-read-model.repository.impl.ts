@@ -5,7 +5,7 @@ import { OrderReadModel } from '../../readmodel/order.read-model';
 import { OrderItemReadModel } from '../../readmodel/order-item.read-model';
 import { Order } from '../../../domain/entity/order.entity';
 import { OrderItem } from '../../../domain/entity/order-item.entity';
-import { NotFoundOrderApplicationException } from '../../../../common/exception/not-found-order-application-exception';
+import { NotFoundOrderApplicationException } from '../../../application/query/exception/not-found-order-application-exception';
 
 @Injectable()
 export class OrderReadModelRepositoryImpl implements OrderReadModelRepository {

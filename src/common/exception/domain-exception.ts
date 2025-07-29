@@ -1,4 +1,4 @@
-import { MDException } from '../../../../common/exception/md-exception';
+import { MDException } from './md-exception';
 
 export abstract class DomainException extends MDException {
   abstract readonly code: string;

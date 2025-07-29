@@ -1,6 +1,6 @@
 import { ClassTransformOptions } from '@nestjs/common/interfaces/external/class-transform-options.interface';
 import { validateSync } from 'class-validator';
-import { MDException } from './exception/md-exception';
+import { MDException } from '../exception/md-exception';
 import { plainToInstance } from 'class-transformer';
 
 export function plainToClassWithValidation<T extends object>(

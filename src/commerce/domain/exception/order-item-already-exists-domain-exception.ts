@@ -1,4 +1,4 @@
-import { DomainException } from './domain-exception';
+import { DomainException } from '../../../common/exception/domain-exception';
 
 export class OrderItemAlreadyExistsDomainException extends DomainException {
   readonly code = 'ORDER_ITEM_ALREADY_EXISTS';

@@ -1,6 +1,6 @@
 import { OrderOutboxRepository } from '../../../domain/repository/order-outbox.repository';
 import { EntityManager, FindOptionsOrder, FindOptionsWhere } from 'typeorm';
-import { DomainEvent } from '../../../domain/common/event/domain-event';
+import { DomainEvent } from '../../../../common/domain/event/domain-event';
 import {
   OrderOutboxEntity,
   OutboxStatus,

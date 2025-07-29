@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import AggregateRootEntity from '../common/entity/aggregate-root.entity';
+import AggregateRootEntity from '../../../common/domain/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { EntityValidation } from '../common/validation/entity-validation';
+import { EntityValidation } from '../../../common/domain/entity/entity-validation';
 import { OrderItem } from './order-item.entity';
-import { OrderItemAlreadyExistsDomainException } from '../common/exception/order-item-already-exists-domain-exception';
+import { OrderItemAlreadyExistsDomainException } from '../exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../value-object/payment-card-info';
 import { Money } from '../value-object/money';
 import { OrderPaidEvent } from '../event/order-paid.event';
-import { DomainEvent } from '../common/event/domain-event';
+import { DomainEvent } from '../../../common/domain/event/domain-event';
 
 export enum OrderStatusEnum {
   PLACED = 'PLACED',

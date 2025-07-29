@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { DomainEvent } from '../common/event/domain-event';
+import { DomainEvent } from '../../../common/domain/event/domain-event';
 import { OrderOutboxEntity } from '../entity/order-outbox.entity';
 
 export interface OrderOutboxRepository {

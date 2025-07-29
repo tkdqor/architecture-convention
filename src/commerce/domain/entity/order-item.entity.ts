@@ -5,12 +5,12 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import SubDomainEntity from '../common/entity/sub-domain.entity';
+import SubDomainEntity from '../../../common/domain/entity/sub-domain.entity';
 import { IsNumber, IsString, Min } from 'class-validator';
-import { OrderItemValidationDomainException } from '../common/exception/order-item-validation-domain-exception';
+import { OrderItemValidationDomainException } from '../exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
 import { Money } from '../value-object/money';
-import { EntityValidation } from '../common/validation/entity-validation';
+import { EntityValidation } from '../../../common/domain/entity/entity-validation';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {

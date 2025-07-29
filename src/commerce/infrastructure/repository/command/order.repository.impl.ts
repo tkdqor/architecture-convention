@@ -3,7 +3,7 @@ import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from 'src/commerce/domain/entity/order.entity';
 import { OrderItem } from 'src/commerce/domain/entity/order-item.entity';
 import { EntityManager } from 'typeorm';
-import { NotFoundOrderApplicationException } from '../../../../common/exception/not-found-order-application-exception';
+import { NotFoundOrderApplicationException } from '../../../application/query/exception/not-found-order-application-exception';
 
 @Injectable()
 export class OrderRepositoryImpl implements OrderRepository {

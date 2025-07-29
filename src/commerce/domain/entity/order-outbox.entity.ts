@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
-import { DomainEvent } from '../common/event/domain-event';
+import { DomainEvent } from '../../../common/domain/event/domain-event';
 
 export enum OutboxStatus {
   PENDING = 'PENDING',
