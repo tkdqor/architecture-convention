@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/repository/order.repository';
 
-export class WrongUpdateOrderUseCase {
+export class WrongUpdateOrderCommandHandlerImpl {
   constructor(
     private dataSource: DataSource,
     private readonly orderRepository: OrderRepository,
