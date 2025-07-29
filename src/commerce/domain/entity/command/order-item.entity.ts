@@ -11,11 +11,9 @@ import { OrderItemValidationDomainException } from '../../common/exception/order
 import { Order } from './order.entity';
 import { Money } from '../../value-object/money';
 import { EntityValidation } from '../../common/validation/entity-validation';
-import { Expose } from 'class-transformer';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
-  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import AggregateRootEntity from '../../common/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
-import { Expose, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { EntityValidation } from '../../common/validation/entity-validation';
 import { OrderItem } from './order-item.entity';
 import { OrderItemAlreadyExistsDomainException } from '../../common/exception/order-item-already-exists-domain-exception';
@@ -18,7 +18,6 @@ export enum OrderStatusEnum {
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
-  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
