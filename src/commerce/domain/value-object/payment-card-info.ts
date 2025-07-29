@@ -1,4 +1,5 @@
 import { Column } from 'typeorm';
+import { EntityValidation } from '../common/validation/entity-validation';
 
 export class PaymentCardInfo {
   @Column({ name: 'card_number', type: 'varchar', length: 100 })
@@ -21,7 +22,6 @@ export class PaymentCardInfo {
     expiry: string,
     cvc: string,
   ): PaymentCardInfo {
-    // TODO: 여기서도 class-validator 동작시키기?
     const cleanedCardNumber = cardNumber.replace(/-/g, '');
     if (!/^\d{16}$/.test(cleanedCardNumber)) {
       throw new Error('카드 번호는 16자리 숫자여야 합니다.');
@@ -40,6 +40,8 @@ export class PaymentCardInfo {
     paymentCardInfo.cardHolder = cardHolder;
     paymentCardInfo.cvc = cvc;
     paymentCardInfo.expiry = expiry;
+    // 타입 검증 진행
+    EntityValidation.validate(paymentCardInfo, () => new PaymentCardInfo());
     return paymentCardInfo;
   }
 
@@ -57,7 +59,6 @@ export class PaymentCardInfo {
     );
   }
 
-  // TODO: equals 되는지 확인!
   equals(other: PaymentCardInfo): boolean {
     const thisKeys = Object.keys(this);
     const otherKeys = Object.keys(other);

@@ -1,5 +1,6 @@
 import { IsNumber, Min } from 'class-validator';
 import { Column } from 'typeorm';
+import { EntityValidation } from '../common/validation/entity-validation';
 
 export class Money {
   @IsNumber()
@@ -10,12 +11,13 @@ export class Money {
   protected constructor() {}
 
   static createMoney(value: number): Money {
-    // TODO: 여기서도 class-validator 동작시키기?
     if (value < 0) {
       throw new Error('Money value cannot be negative.');
     }
     const money = new Money();
     money.value = value;
+    // 타입 검증 진행
+    EntityValidation.validate(money, () => new Money());
     return money;
   }
 
