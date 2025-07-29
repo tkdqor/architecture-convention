@@ -20,6 +20,20 @@ export interface CreateOrderParams {
   customerId: string;
 }
 
+export interface CreateOrderItemParams {
+  productId: string;
+  productName: string;
+  price: number;
+  quantity: number;
+}
+
+export interface AddPaymentCardInfoParams {
+  cardNumber: string;
+  cardHolder: string;
+  expiry: string;
+  cvc: string;
+}
+
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -71,30 +85,25 @@ export class Order extends AggregateRootEntity {
   }
 
   // 애그리거트 루트를 통한 OrderItem 추가 (일관성 유지)
-  addItem(
-    productId: string,
-    productName: string,
-    price: number,
-    quantity: number,
-  ): void {
+  addItem(params: CreateOrderItemParams): void {
     // items가 undefined인 경우 빈 배열로 초기화
     if (!this.items) {
       this.items = [];
     }
 
     const existingItem = this.items.find(
-      (item) => item.productId === productId,
+      (item) => item.productId === params.productId,
     );
     if (existingItem) {
-      throw new OrderItemAlreadyExistsDomainException(productId);
+      throw new OrderItemAlreadyExistsDomainException(params.productId);
     }
 
     const newItem = OrderItem.createOrderItem(
       this,
-      productId,
-      productName,
-      Money.createMoney(price),
-      quantity,
+      params.productId,
+      params.productName,
+      Money.createMoney(params.price),
+      params.quantity,
     );
     this.items.push(newItem);
     this.updateTotalAmount(newItem);
@@ -107,17 +116,12 @@ export class Order extends AggregateRootEntity {
   }
 
   // 카드 결제 정보 추가 >>> domain event 예시 코드 추가
-  addPaymentCardInfo(
-    cardNumber: string,
-    cardHolder: string,
-    expiry: string,
-    cvc: string,
-  ): void {
+  addPaymentCardInfo(params: AddPaymentCardInfoParams): void {
     this.paymentCardInfo = PaymentCardInfo.createPaymentCardInfo(
-      cardNumber,
-      cardHolder,
-      expiry,
-      cvc,
+      params.cardNumber,
+      params.cardHolder,
+      params.expiry,
+      params.cvc,
     );
 
     // 상태 변경

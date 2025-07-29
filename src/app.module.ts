@@ -5,17 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
-import { OrderResolver } from './commerce/interface/order.resolver';
 import { CreateOrderCommandHandlerImpl } from './commerce/application/command/handler/create-order-command-handler-impl';
 import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
 import { Order } from './commerce/domain/entity/order.entity';
 import { OrderItem } from './commerce/domain/entity/order-item.entity';
 import { OrderOutboxEntity } from './commerce/domain/entity/order-outbox.entity';
-import { CreateOrderItemUseCase } from './commerce/application/command/handler/create-order-Item.use-case';
+import { CreateOrderItemCommandHandlerImpl } from './commerce/application/command/handler/create-order-item-command-handler-impl';
 import { GetOrderDetailUseCase } from './commerce/application/query/handler/get-order-detail.use-case';
 import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/repository/query/order-read-model.repository.impl';
 import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/command/order-outbox.repository.impl';
-import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-event-publisher'; // 클래스 이름 변경 반영
+import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-event-publisher';
+import { OrderResolver } from './commerce/presentation/order.resolver';
 
 @Module({
   imports: [
@@ -46,7 +46,7 @@ import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-ev
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
     },
-    CreateOrderItemUseCase,
+    CreateOrderItemCommandHandlerImpl,
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,

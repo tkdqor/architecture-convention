@@ -1,7 +1,6 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
-import { CreateOrderItemUseCase } from '../application/command/handler/create-order-Item.use-case';
 import {
   CreateOrderGqlPayload,
   CreateOrderGqlInput,
@@ -10,12 +9,13 @@ import {
 import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
 import { GetOrderDetailUseCase } from '../application/query/handler/get-order-detail.use-case';
 import { CreateOrderICommandHandler } from '../application/command/handler/create-order-i-command-handler';
+import { CreateOrderItemICommandHandler } from '../application/command/handler/create-order-item-i-command-handler';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
   constructor(
     private readonly createOrderICommandHandler: CreateOrderICommandHandler,
-    private readonly createOrderItemUseCase: CreateOrderItemUseCase,
+    private readonly createOrderItemICommandHandler: CreateOrderItemICommandHandler,
     private readonly getOrderDetailUseCase: GetOrderDetailUseCase,
   ) {}
 
@@ -23,10 +23,6 @@ export class OrderResolver {
   async createOrder(
     @Args('input') input: CreateOrderGqlInput,
   ): Promise<CreateOrderGqlPayload> {
-    // TODO
-    // 인터페이스 : ICommandHandler
-    // DTO 객체 : command
-    // 핸들러: CommandHandlerImpl
     const command = OrderMapper.toCreateOrderCommand(input);
     const orderResponse =
       await this.createOrderICommandHandler.execute(command);
@@ -37,8 +33,8 @@ export class OrderResolver {
   async createOrderItem(
     @Args('input') input: CreateOrderItemGqlInput,
   ): Promise<CreateOrderGqlPayload> {
-    const ucInput = OrderMapper.toCreateOrderItemUseCaseInput(input);
-    const order = await this.createOrderItemUseCase.execute(ucInput);
+    const command = OrderMapper.toCreateOrderItemCommand(input);
+    const order = await this.createOrderItemICommandHandler.execute(command);
     return OrderMapper.toCreateOrderGqlPayload(order);
   }
 

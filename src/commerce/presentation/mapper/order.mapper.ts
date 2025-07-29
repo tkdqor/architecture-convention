@@ -17,7 +17,7 @@ import {
 } from '../graphql/get-order.graphql';
 import { OrderItemReadModel } from '../../infrastructure/readmodel/order-item.read-model';
 import { CreateOrderCommand } from '../../application/command/dto/create-order.command';
-import { CreateOrderItemUseCaseInput } from '../../application/command/dto/create-order-item.use-case-input';
+import { CreateOrderItemCommand } from '../../application/command/dto/create-order-item.command';
 import { Money } from '../../domain/value-object/money';
 
 export class OrderMapper {
@@ -31,12 +31,12 @@ export class OrderMapper {
   }
 
   /**
-   * CreateOrderItemGqlInput을 CreateOrderItemUseCaseInput으로 변환
+   * CreateOrderItemGqlInput을 CreateOrderItemCommand로 변환
    */
-  static toCreateOrderItemUseCaseInput(
+  static toCreateOrderItemCommand(
     input: CreateOrderItemGqlInput,
-  ): CreateOrderItemUseCaseInput {
-    return new CreateOrderItemUseCaseInput({
+  ): CreateOrderItemCommand {
+    return new CreateOrderItemCommand({
       orderId: input.orderId,
     });
   }

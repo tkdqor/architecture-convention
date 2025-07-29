@@ -2,13 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from '../../../domain/entity/order.entity';
-import { CreateOrderItemUseCaseInput } from '../dto/create-order-item.use-case-input';
-import { OrderCommandMapper } from '../../../domain/command/mapper/order-command.mapper';
+import { CreateOrderItemCommand } from '../dto/create-order-item.command';
 import { OrderOutboxRepository } from '../../../domain/repository/order-outbox.repository';
 import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher';
+import { CreateOrderItemICommandHandler } from './create-order-item-i-command-handler';
 
 @Injectable()
-export class CreateOrderItemUseCase {
+export class CreateOrderItemCommandHandlerImpl
+  implements CreateOrderItemICommandHandler
+{
   constructor(
     private dataSource: DataSource,
     @Inject('OrderRepository')
@@ -18,17 +20,26 @@ export class CreateOrderItemUseCase {
     private readonly outboxEventPublisher: OutboxEventPublisher,
   ) {}
 
-  async execute(ucInput: CreateOrderItemUseCaseInput): Promise<Order> {
+  async execute(command: CreateOrderItemCommand): Promise<Order> {
     return await this.dataSource.transaction(async (entityManager) => {
-      const command = OrderCommandMapper.toCreateOrderItemCommand(ucInput);
       const order = await this.orderRepository.getById(
         entityManager,
         command.orderId,
       );
 
-      order.addItem('test', 'test', 1000, 2);
-      // 카드 결제 정보 추가(request로 결제 정보 받았다고 가정)
-      order.addPaymentCardInfo('1111-1111-1111-1111', 'asdf', '27/03', '333');
+      // item 정보 및 카드 결제 정보 추가(request로 받았다고 가정)
+      order.addItem({
+        productId: 'test',
+        productName: 'test',
+        price: 1000,
+        quantity: 2,
+      });
+      order.addPaymentCardInfo({
+        cardNumber: '1111-1111-1111-1111',
+        cardHolder: 'asdf',
+        expiry: '27/03',
+        cvc: '333',
+      });
 
       // 발생한 도메인 이벤트 확인
       const domainEvents = order.getRaisedEventList();
