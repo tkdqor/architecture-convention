@@ -25,10 +25,8 @@ export class CreateOrderCommandHandlerImpl
     items: OrderItem[];
     createdAt: Date;
   }> {
-    // TODO: 매핑할거면 윗단에서 해야함 도메인 레이어 X > props > 도메인에 넣을 때 네임드 파라미터 이용하기
     const entityManager = this.dataSource.manager;
     // const order = new Order(); 불가능
-    // const order = Order.createOrder(command.customerId);
     const order = Order.createOrder({ customerId: command.customerId });
     const savedOrder = await this.orderRepository.save(entityManager, order);
 

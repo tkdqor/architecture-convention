@@ -16,6 +16,10 @@ export enum OrderStatusEnum {
   REFUNDED = 'REFUNDED',
 }
 
+export interface CreateOrderParams {
+  customerId: string;
+}
+
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -55,12 +59,12 @@ export class Order extends AggregateRootEntity {
   }
 
   // 생성자 대신 static 메서드로 엔티티 생성
-  static createOrder({ customerId }: { customerId: string }): Order {
+  static createOrder(params: CreateOrderParams): Order {
     const order = new Order();
     order.status = OrderStatusEnum.PLACED;
     order.items = [];
     order.totalAmount = Money.createMoney(0);
-    order.customerId = customerId;
+    order.customerId = params.customerId;
     // 타입 검증 진행
     EntityValidation.validate(order, () => new Order());
     return order;
