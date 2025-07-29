@@ -2,9 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderReadModel } from '../../../infrastructure/readmodel/order.read-model';
 import { OrderReadModelRepository } from '../../../infrastructure/repository/query/order-read-model.repository';
+import { GetOrderDetailUseCase } from './get-order-detail-use-case';
 
 @Injectable()
-export class GetOrderDetailUseCase {
+export class GetOrderDetailUseCaseImpl implements GetOrderDetailUseCase {
   constructor(
     private dataSource: DataSource,
     @Inject('OrderReadModelRepository')

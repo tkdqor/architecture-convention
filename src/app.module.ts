@@ -11,7 +11,6 @@ import { Order } from './commerce/domain/entity/order.entity';
 import { OrderItem } from './commerce/domain/entity/order-item.entity';
 import { OrderOutboxEntity } from './commerce/domain/entity/order-outbox.entity';
 import { CreateOrderItemCommandHandlerImpl } from './commerce/application/command/handler/create-order-item-command-handler-impl';
-import { GetOrderDetailUseCase } from './commerce/application/query/handler/get-order-detail.use-case';
 import { OrderReadModelRepositoryImpl } from './commerce/infrastructure/repository/query/order-read-model.repository.impl';
 import { OrderOutboxRepositoryImpl } from './commerce/infrastructure/repository/command/order-outbox.repository.impl';
 import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-event-publisher';
@@ -61,12 +60,15 @@ import { OrderResolver } from './commerce/presentation/order.resolver';
       provide: 'OrderOutboxRepository',
       useClass: OrderOutboxRepositoryImpl,
     },
-    GetOrderDetailUseCase,
+    {
+      provide: 'GetOrderDetailUseCase',
+      useClass: OrderOutboxRepositoryImpl,
+    },
     {
       provide: 'OrderReadModelRepository',
       useClass: OrderReadModelRepositoryImpl,
     },
-    OutboxEventPublisher, // Outbox 이벤트 발행 서비스 이름 변경 반영
+    OutboxEventPublisher,
   ],
 })
 export class AppModule {}
