@@ -1,8 +1,8 @@
 import {
   Order,
   OrderStatusEnum,
-} from '../../domain/entity/command/order.entity';
-import { OrderItem } from '../../domain/entity/command/order-item.entity';
+} from '../../domain/entity/order.entity';
+import { OrderItem } from '../../domain/entity/order-item.entity';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,
@@ -10,12 +10,12 @@ import {
   CreateOrderItemGqlInput,
   CreateOrderItemGqlPayload,
 } from '../graphql/create-order.graphql';
-import { OrderReadModel } from '../../domain/entity/query/order.read-model';
+import { OrderReadModel } from '../../domain/readmodel/order.read-model';
 import {
   GetOrderDetailGqlPayload,
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
-import { OrderItemReadModel } from '../../domain/entity/query/order-item.read-model';
+import { OrderItemReadModel } from '../../domain/readmodel/order-item.read-model';
 import { CreateOrderUseCaseInput } from '../../application/use-case-input/create-order.use-case-input';
 import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
 

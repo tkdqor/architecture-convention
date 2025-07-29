@@ -1,6 +1,6 @@
 
 import { OrderItemReadModel } from './order-item.read-model';
-import { OrderStatusEnum } from '../command/order.entity';
+import { OrderStatusEnum } from '../entity/order.entity';
 
 export class OrderReadModel {
   constructor(

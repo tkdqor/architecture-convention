@@ -4,7 +4,7 @@ import { DomainEvent } from '../../../domain/common/event/domain-event';
 import {
   OrderOutboxEntity,
   OutboxStatus,
-} from '../../../domain/entity/command/order-outbox.entity';
+} from '../../../domain/entity/order-outbox.entity';
 
 export class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
   async save(

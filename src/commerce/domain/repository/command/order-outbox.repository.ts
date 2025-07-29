@@ -1,6 +1,6 @@
 import { EntityManager } from 'typeorm';
 import { DomainEvent } from '../../common/event/domain-event';
-import { OrderOutboxEntity } from '../../entity/command/order-outbox.entity';
+import { OrderOutboxEntity } from '../../entity/order-outbox.entity';
 
 export interface OrderOutboxRepository {
   save(entityManager: EntityManager, events: DomainEvent[]): Promise<void>;
