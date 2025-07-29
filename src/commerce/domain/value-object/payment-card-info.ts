@@ -40,8 +40,6 @@ export class PaymentCardInfo {
     paymentCardInfo.cardHolder = cardHolder;
     paymentCardInfo.cvc = cvc;
     paymentCardInfo.expiry = expiry;
-    // 타입 검증 진행
-    EntityValidation.validate(paymentCardInfo, () => new PaymentCardInfo());
     return paymentCardInfo;
   }
 

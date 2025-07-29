@@ -1,6 +1,5 @@
 import { IsNumber, Min } from 'class-validator';
 import { Column } from 'typeorm';
-import { EntityValidation } from '../common/validation/entity-validation';
 
 export class Money {
   @IsNumber()
@@ -16,8 +15,6 @@ export class Money {
     }
     const money = new Money();
     money.value = value;
-    // 타입 검증 진행
-    EntityValidation.validate(money, () => new Money());
     return money;
   }
 
@@ -35,7 +32,6 @@ export class Money {
     return Money.createMoney(this.value * quantity);
   }
 
-  // TODO: equals 되는지 확인!
   equals(other: Money): boolean {
     const thisKeys = Object.keys(this);
     const otherKeys = Object.keys(other);
