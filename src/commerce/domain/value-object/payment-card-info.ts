@@ -1,5 +1,4 @@
 import { Column } from 'typeorm';
-import { EntityValidation } from '../common/validation/entity-validation';
 
 export class PaymentCardInfo {
   @Column({ name: 'card_number', type: 'varchar', length: 100 })
