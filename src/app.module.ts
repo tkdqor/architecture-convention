@@ -41,12 +41,18 @@ import { OrderResolver } from './commerce/presentation/order.resolver';
   providers: [
     AppService,
     OrderResolver,
-    CreateOrderCommandHandlerImpl,
+    {
+      provide: 'CreateOrderICommandHandler',
+      useClass: CreateOrderCommandHandlerImpl,
+    },
+    {
+      provide: 'CreateOrderItemICommandHandler',
+      useClass: CreateOrderItemCommandHandlerImpl,
+    },
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
     },
-    CreateOrderItemCommandHandlerImpl,
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,

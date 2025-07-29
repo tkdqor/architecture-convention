@@ -10,11 +10,14 @@ import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
 import { GetOrderDetailUseCase } from '../application/query/handler/get-order-detail.use-case';
 import { CreateOrderICommandHandler } from '../application/command/handler/create-order-i-command-handler';
 import { CreateOrderItemICommandHandler } from '../application/command/handler/create-order-item-i-command-handler';
+import { Inject } from '@nestjs/common';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
   constructor(
+    @Inject('CreateOrderICommandHandler')
     private readonly createOrderICommandHandler: CreateOrderICommandHandler,
+    @Inject('CreateOrderItemICommandHandler')
     private readonly createOrderItemICommandHandler: CreateOrderItemICommandHandler,
     private readonly getOrderDetailUseCase: GetOrderDetailUseCase,
   ) {}
