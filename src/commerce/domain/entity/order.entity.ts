@@ -55,7 +55,7 @@ export class Order extends AggregateRootEntity {
   }
 
   // 생성자 대신 static 메서드로 엔티티 생성
-  static createOrder(customerId: string): Order {
+  static createOrder({ customerId }: { customerId: string }): Order {
     const order = new Order();
     order.status = OrderStatusEnum.PLACED;
     order.items = [];

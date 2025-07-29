@@ -2,12 +2,12 @@ import { plainToClassWithValidation } from '../../../common/utils';
 import { IsString } from 'class-validator';
 import { Expose } from 'class-transformer';
 
-export class CreateOrderUseCaseInput {
-  constructor(partial?: Partial<CreateOrderUseCaseInput>) {
+export class CreateOrderCommand {
+  constructor(partial?: Partial<CreateOrderCommand>) {
     if (partial) {
       Object.assign(
         this,
-        plainToClassWithValidation(CreateOrderUseCaseInput, partial, {
+        plainToClassWithValidation(CreateOrderCommand, partial, {
           excludeExtraneousValues: true,
         }),
       );

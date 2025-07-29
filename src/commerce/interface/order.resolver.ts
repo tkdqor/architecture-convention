@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { CreateOrderUseCase } from '../application/use-case/command/create-order.use-case';
+import { CreateOrderCommandHandlerImpl } from '../application/use-case/command/create-order-command-handler-impl';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
 import { CreateOrderItemUseCase } from '../application/use-case/command/create-order-Item.use-case';
@@ -10,11 +10,12 @@ import {
 } from './graphql/create-order.graphql';
 import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
 import { GetOrderDetailUseCase } from '../application/use-case/query/get-order-detail.use-case';
+import { CreateOrderICommandHandler } from '../application/use-case/command/handler/create-order-i-command-handler';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
   constructor(
-    private readonly createOrderUseCase: CreateOrderUseCase,
+    private readonly createOrderICommandHandler: CreateOrderICommandHandler,
     private readonly createOrderItemUseCase: CreateOrderItemUseCase,
     private readonly getOrderDetailUseCase: GetOrderDetailUseCase,
   ) {}
@@ -23,8 +24,13 @@ export class OrderResolver {
   async createOrder(
     @Args('input') input: CreateOrderGqlInput,
   ): Promise<CreateOrderGqlPayload> {
-    const ucInput = OrderMapper.toCreateOrderUseCaseInput(input);
-    const orderResponse = await this.createOrderUseCase.execute(ucInput);
+    // TODO
+    // 인터페이스 : ICommandHandler
+    // DTO 객체 : command
+    // 핸들러: CommandHandlerImpl
+    const command = OrderMapper.toCreateOrderCommand(input);
+    const orderResponse =
+      await this.createOrderICommandHandler.execute(command);
     return OrderMapper.toCreateOrderGqlPayload(orderResponse);
   }
 

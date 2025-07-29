@@ -16,18 +16,16 @@ import {
   GetOrderItemDetailGqlPayload,
 } from '../graphql/get-order.graphql';
 import { OrderItemReadModel } from '../../domain/readmodel/order-item.read-model';
-import { CreateOrderUseCaseInput } from '../../application/use-case-input/create-order.use-case-input';
+import { CreateOrderCommand } from '../../application/use-case-input/create-order.command';
 import { CreateOrderItemUseCaseInput } from '../../application/use-case-input/create-order-item.use-case-input';
 import { Money } from '../../domain/value-object/money';
 
 export class OrderMapper {
   /**
-   * CreateOrderGqlInput을 CreateOrderUseCaseInput로 변환
+   * CreateOrderGqlInput을 CreateOrderCommand로 변환
    */
-  static toCreateOrderUseCaseInput(
-    input: CreateOrderGqlInput,
-  ): CreateOrderUseCaseInput {
-    return new CreateOrderUseCaseInput({
+  static toCreateOrderCommand(input: CreateOrderGqlInput): CreateOrderCommand {
+    return new CreateOrderCommand({
       customerId: input.customerId,
     });
   }

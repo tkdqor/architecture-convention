@@ -6,7 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ScheduleModule } from '@nestjs/schedule';
 import { OrderResolver } from './commerce/interface/order.resolver';
-import { CreateOrderUseCase } from './commerce/application/use-case/command/create-order.use-case';
+import { CreateOrderCommandHandlerImpl } from './commerce/application/use-case/command/create-order-command-handler-impl';
 import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
 import { Order } from './commerce/domain/entity/order.entity';
 import { OrderItem } from './commerce/domain/entity/order-item.entity';
@@ -41,7 +41,7 @@ import { OutboxEventPublisher } from './commerce/infrastructure/outbox/outbox-ev
   providers: [
     AppService,
     OrderResolver,
-    CreateOrderUseCase,
+    CreateOrderCommandHandlerImpl,
     {
       provide: 'OrderRepository',
       useClass: OrderRepositoryImpl,
