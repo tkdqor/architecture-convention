@@ -40,37 +40,7 @@ export class CreateOrderItemCommandHandlerImpl
         expiry: '27/03',
         cvc: '333',
       });
-
-      // 발생한 도메인 이벤트 확인
-      const domainEvents = order.getRaisedEventList();
-
-      const savedOrder = await this.orderRepository.save(entityManager, order);
-
-      // TODO: 공통로직? 인프라 레이어에서 진행? ex. orderReposiotry.save 진행할 때 진행? ex) AOP 어노테이션?
-      // 도메인 이벤트를 Outbox에 저장
-      if (domainEvents.length > 0) {
-        await this.orderOutboxRepository.save(entityManager, domainEvents);
-        // 이벤트 저장 후 엔티티에서 이벤트 목록 클리어
-        order.clearEvents();
-      }
-
-      return savedOrder;
-
-      // TODO: 로그 메시지를 MDException과 DomainException을 나눈 케이스
-      // try {
-      //   // ...
-      // } catch (error) {
-      //   // instanceof로 예외 타입 구분하여 로깅
-      //   if (error instanceof ApplicationException) {
-      //     this.logger.error(error.getLogMessage());
-      //     // 출력: [DOMAIN-EXCEPTION] ORDER_ITEM_ALREADY_EXISTS | order item with id test already exists
-      //   } else if (error instanceof MDException) {
-      //     this.logger.warn(error.getLogMessage());
-      //     // 출력: [MD-EXCEPTION] Some general error message
-      //   } else {
-      //     this.logger.error(`[UNEXPECTED-ERROR] ${error.message}`, error.stack);
-      //   }
-      // }
+      return await this.orderRepository.save(entityManager, order);
     });
   }
 }
