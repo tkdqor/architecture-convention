@@ -3,8 +3,6 @@ import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from '../../../domain/entity/order.entity';
 import { CreateOrderItemCommand } from '../dto/create-order-item.command';
-import { OrderOutboxRepository } from '../../../domain/repository/order-outbox.repository';
-import { OutboxEventPublisher } from '../../../infrastructure/outbox/outbox-event-publisher';
 import { CreateOrderItemICommandHandler } from './create-order-item-i-command-handler';
 
 @Injectable()
@@ -15,9 +13,6 @@ export class CreateOrderItemCommandHandlerImpl
     private dataSource: DataSource,
     @Inject('OrderRepository')
     private readonly orderRepository: OrderRepository,
-    @Inject('OrderOutboxRepository')
-    private readonly orderOutboxRepository: OrderOutboxRepository,
-    private readonly outboxEventPublisher: OutboxEventPublisher,
   ) {}
 
   async execute(command: CreateOrderItemCommand): Promise<Order> {

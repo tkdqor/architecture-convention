@@ -7,12 +7,6 @@ import {
   CreateOrderItemGqlInput,
   CreateOrderItemResultObject,
 } from '../graphql/create-order.graphql';
-import { OrderReadModel } from '../../infrastructure/readmodel/order.read-model';
-import {
-  GetOrderDetailGqlPayload,
-  GetOrderItemDetailGqlPayload,
-} from '../graphql/get-order.graphql';
-import { OrderItemReadModel } from '../../infrastructure/readmodel/order-item.read-model';
 import { CreateOrderCommand } from '../../application/command/dto/create-order.command';
 import { CreateOrderItemCommand } from '../../application/command/dto/create-order-item.command';
 
@@ -98,47 +92,47 @@ export class OrderMapper {
     }
   }
 
-  /**
-   * OrderReadModel를 GetOrderDetailGqlPayload로 변환
-   */
-  static toGetOrderDetailGqlPayload(
-    orderReadModel: OrderReadModel,
-  ): GetOrderDetailGqlPayload {
-    return new GetOrderDetailGqlPayload({
-      id: orderReadModel.id,
-      customerId: orderReadModel.customerId,
-      status: this.mapOrderStatusToGql(orderReadModel.status),
-      totalAmount: orderReadModel.totalAmount,
-      items: this.toGetOrderItemDetailGqlPayloads(orderReadModel.items),
-    });
-  }
+  // /**
+  //  * OrderReadModel를 GetOrderDetailGqlPayload로 변환
+  //  */
+  // static toGetOrderDetailGqlPayload(
+  //   orderReadModel: OrderReadModel,
+  // ): GetOrderDetailGqlPayload {
+  //   return new GetOrderDetailGqlPayload({
+  //     id: orderReadModel.id,
+  //     customerId: orderReadModel.customerId,
+  //     status: this.mapOrderStatusToGql(orderReadModel.status),
+  //     totalAmount: orderReadModel.totalAmount,
+  //     items: this.toGetOrderItemDetailGqlPayloads(orderReadModel.items),
+  //   });
+  // }
 
-  /**
-   * OrderItemReadModel을 GetOrderItemDetailGqlPayload로 변환
-   */
-  static toGetOrderItemDetailGqlPayload(
-    orderItemReadModel: OrderItemReadModel,
-  ): GetOrderItemDetailGqlPayload {
-    return new GetOrderItemDetailGqlPayload({
-      id: orderItemReadModel.id,
-      orderId: orderItemReadModel.orderId,
-      productId: orderItemReadModel.productId,
-      price: orderItemReadModel.price,
-      quantity: orderItemReadModel.quantity,
-      totalAmount: orderItemReadModel.totalAmount,
-      createdAt: orderItemReadModel.createdAt,
-      updatedAt: orderItemReadModel.updatedAt,
-    });
-  }
+  // /**
+  //  * OrderItemReadModel을 GetOrderItemDetailGqlPayload로 변환
+  //  */
+  // static toGetOrderItemDetailGqlPayload(
+  //   orderItemReadModel: OrderItemReadModel,
+  // ): GetOrderItemDetailGqlPayload {
+  //   return new GetOrderItemDetailGqlPayload({
+  //     id: orderItemReadModel.id,
+  //     orderId: orderItemReadModel.orderId,
+  //     productId: orderItemReadModel.productId,
+  //     price: orderItemReadModel.price,
+  //     quantity: orderItemReadModel.quantity,
+  //     totalAmount: orderItemReadModel.totalAmount,
+  //     createdAt: orderItemReadModel.createdAt,
+  //     updatedAt: orderItemReadModel.updatedAt,
+  //   });
+  // }
 
-  /**
-   * OrderItemReadModel 배열을 GetOrderItemDetailGqlPayload 배열로 변환
-   */
-  static toGetOrderItemDetailGqlPayloads(
-    orderItemReadModels: OrderItemReadModel[],
-  ): GetOrderItemDetailGqlPayload[] {
-    return orderItemReadModels.map((orderItemReadModel) =>
-      this.toGetOrderItemDetailGqlPayload(orderItemReadModel),
-    );
-  }
+  // /**
+  //  * OrderItemReadModel 배열을 GetOrderItemDetailGqlPayload 배열로 변환
+  //  */
+  // static toGetOrderItemDetailGqlPayloads(
+  //   orderItemReadModels: OrderItemReadModel[],
+  // ): GetOrderItemDetailGqlPayload[] {
+  //   return orderItemReadModels.map((orderItemReadModel) =>
+  //     this.toGetOrderItemDetailGqlPayload(orderItemReadModel),
+  //   );
+  // }
 }

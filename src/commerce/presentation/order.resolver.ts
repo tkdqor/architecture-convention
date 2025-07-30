@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
 import {
@@ -6,11 +6,9 @@ import {
   CreateOrderGqlInput,
   CreateOrderItemGqlInput,
 } from './graphql/create-order.graphql';
-import { GetOrderDetailGqlPayload } from './graphql/get-order.graphql';
 import { CreateOrderICommandHandler } from '../application/command/handler/create-order-i-command-handler';
 import { CreateOrderItemICommandHandler } from '../application/command/handler/create-order-item-i-command-handler';
 import { Inject } from '@nestjs/common';
-import { GetOrderDetailUseCase } from '../application/query/usecase/get-order-detail-use-case';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
@@ -19,8 +17,6 @@ export class OrderResolver {
     private readonly createOrderICommandHandler: CreateOrderICommandHandler,
     @Inject('CreateOrderItemICommandHandler')
     private readonly createOrderItemICommandHandler: CreateOrderItemICommandHandler,
-    @Inject('GetOrderDetailUseCase')
-    private readonly getOrderDetailUseCase: GetOrderDetailUseCase,
   ) {}
 
   @Mutation(() => CreateOrderResultObject, { description: '주문 생성' })
