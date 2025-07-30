@@ -6,17 +6,17 @@ import {
   CreateOrderGqlInput,
   CreateOrderItemGqlInput,
 } from './graphql/create-order.graphql';
-import { CreateOrderICommandHandler } from '../application/command/handler/create-order-i-command-handler';
-import { CreateOrderItemICommandHandler } from '../application/command/handler/create-order-item-i-command-handler';
+import { CreateOrderCommandHandler } from '../application/command/handler/create-order-command-handler';
+import { CreateOrderItemCommandHandler } from '../application/command/handler/create-order-item-command-handler';
 import { Inject } from '@nestjs/common';
 
 @Resolver(() => OrderGqlObject)
 export class OrderResolver {
   constructor(
     @Inject('CreateOrderICommandHandler')
-    private readonly createOrderICommandHandler: CreateOrderICommandHandler,
+    private readonly createOrderICommandHandler: CreateOrderCommandHandler,
     @Inject('CreateOrderItemICommandHandler')
-    private readonly createOrderItemICommandHandler: CreateOrderItemICommandHandler,
+    private readonly createOrderItemICommandHandler: CreateOrderItemCommandHandler,
   ) {}
 
   @Mutation(() => CreateOrderResultObject, { description: '주문 생성' })

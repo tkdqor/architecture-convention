@@ -3,11 +3,11 @@ import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../../domain/repository/order.repository';
 import { Order } from '../../../domain/entity/order.entity';
 import { CreateOrderItemCommand } from '../dto/create-order-item.command';
-import { CreateOrderItemICommandHandler } from './create-order-item-i-command-handler';
+import { CreateOrderItemCommandHandler } from './create-order-item-command-handler';
 
 @Injectable()
 export class CreateOrderItemCommandHandlerImpl
-  implements CreateOrderItemICommandHandler
+  implements CreateOrderItemCommandHandler
 {
   constructor(
     private dataSource: DataSource,
