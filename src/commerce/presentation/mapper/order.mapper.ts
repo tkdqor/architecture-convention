@@ -1,14 +1,11 @@
-import {
-  Order,
-  OrderStatusEnum,
-} from '../../domain/entity/order.entity';
+import { Order, OrderStatusEnum } from '../../domain/entity/order.entity';
 import { OrderItem } from '../../domain/entity/order-item.entity';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,
-  CreateOrderGqlPayload,
+  CreateOrderResultObject,
   CreateOrderItemGqlInput,
-  CreateOrderItemGqlPayload,
+  CreateOrderItemResultObject,
 } from '../graphql/create-order.graphql';
 import { OrderReadModel } from '../../infrastructure/readmodel/order.read-model';
 import {
@@ -18,7 +15,6 @@ import {
 import { OrderItemReadModel } from '../../infrastructure/readmodel/order-item.read-model';
 import { CreateOrderCommand } from '../../application/command/dto/create-order.command';
 import { CreateOrderItemCommand } from '../../application/command/dto/create-order-item.command';
-import { Money } from '../../domain/value-object/money';
 
 export class OrderMapper {
   /**
@@ -42,48 +38,45 @@ export class OrderMapper {
   }
 
   /**
-   * Order 엔티티를 CreateOrderGqlPayload로 변환
+   * Order 엔티티를 CreateOrderResultObject로 변환
    */
-  static toCreateOrderGqlPayload(response: {
-    id: string;
-    customerId: string;
-    status: OrderStatusEnum;
-    totalAmount: Money;
-    items: OrderItem[];
-    createdAt: Date;
-  }): CreateOrderGqlPayload {
-    return new CreateOrderGqlPayload({
-      id: response.id,
-      customerId: response.customerId,
-      status: this.mapOrderStatusToGql(response.status),
-      totalAmount: response.totalAmount.value,
-      items: this.toCreateOrderItemGqlPayloads(response.items),
+  static toCreateOrderResultObject(order: Order): CreateOrderResultObject {
+    return new CreateOrderResultObject({
+      id: order.id,
+      customerId: order.customerId,
+      status: this.mapOrderStatusToGql(order.status),
+      totalAmount: order.totalAmount.value,
+      items: this.toCreateOrderItemResultObjects(order.items),
+      message: 'Order created successfully',
+      createdAt: new Date(),
     });
   }
 
   /**
-   * OrderItem 엔티티를 CreateOrderItemGqlPayload로 변환
+   * OrderItem 엔티티를 CreateOrderItemResultObject로 변환
    */
-  static toCreateOrderItemGqlPayload(
+  static toCreateOrderItemResultObject(
     orderItem: OrderItem,
-  ): CreateOrderItemGqlPayload {
-    return new CreateOrderItemGqlPayload({
+  ): CreateOrderItemResultObject {
+    return new CreateOrderItemResultObject({
       id: orderItem.id,
       productId: orderItem.productId,
       productName: orderItem.productName,
       price: orderItem.price.value,
       quantity: orderItem.quantity,
+      message: 'OrderItem created successfully',
+      createdAt: new Date(),
     });
   }
 
   /**
-   * OrderItem 엔티티 배열을 CreateOrderItemGqlPayload 배열로 변환
+   * OrderItem 엔티티 배열을 CreateOrderItemResultObject 배열로 변환
    */
-  static toCreateOrderItemGqlPayloads(
+  static toCreateOrderItemResultObjects(
     orderItems: OrderItem[],
-  ): CreateOrderItemGqlPayload[] {
+  ): CreateOrderItemResultObject[] {
     return orderItems.map((orderItem) =>
-      this.toCreateOrderItemGqlPayload(orderItem),
+      this.toCreateOrderItemResultObject(orderItem),
     );
   }
 

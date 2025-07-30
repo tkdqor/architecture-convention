@@ -19,13 +19,13 @@ export class CreateOrderItemGqlInput {
   orderId: string;
 }
 
-@ObjectType('OrderItemGqlPayload')
-export class CreateOrderItemGqlPayload {
-  constructor(partial?: Partial<CreateOrderItemGqlPayload>) {
+@ObjectType('CreateOrderItemResult')
+export class CreateOrderItemResultObject {
+  constructor(partial?: Partial<CreateOrderItemResultObject>) {
     if (partial) {
       Object.assign(
         this,
-        plainToClass(CreateOrderItemGqlPayload, partial, {
+        plainToClass(CreateOrderItemResultObject, partial, {
           excludeExtraneousValues: true,
         }),
       );
@@ -51,15 +51,23 @@ export class CreateOrderItemGqlPayload {
   @Expose()
   @Field(() => Number, { description: '주문 수량' })
   quantity: number;
+
+  @Expose()
+  @Field({ description: 'Success message' })
+  message!: string;
+
+  @Expose()
+  @Field({ description: 'Creation timestamp' })
+  createdAt!: Date;
 }
 
-@ObjectType('CreateOrderGqlPayload')
-export class CreateOrderGqlPayload {
-  constructor(partial?: Partial<CreateOrderGqlPayload>) {
+@ObjectType('CreateOrderResult')
+export class CreateOrderResultObject {
+  constructor(partial?: Partial<CreateOrderResultObject>) {
     if (partial) {
       Object.assign(
         this,
-        plainToClass(CreateOrderGqlPayload, partial, {
+        plainToClass(CreateOrderResultObject, partial, {
           excludeExtraneousValues: true,
         }),
       );
@@ -82,11 +90,19 @@ export class CreateOrderGqlPayload {
   @Field(() => Number, { description: '총 주문 금액' })
   totalAmount: number;
 
-  @Type(() => CreateOrderItemGqlPayload)
+  @Type(() => CreateOrderItemResultObject)
   @Expose()
-  @Field(() => [CreateOrderItemGqlPayload], {
+  @Field(() => [CreateOrderItemResultObject], {
     description: '주문 아이템 목록',
     nullable: true,
   })
-  items: CreateOrderItemGqlPayload[] | null;
+  items: CreateOrderItemResultObject[] | null;
+
+  @Expose()
+  @Field({ description: 'Success message' })
+  message!: string;
+
+  @Expose()
+  @Field({ description: 'Creation timestamp' })
+  createdAt!: Date;
 }
