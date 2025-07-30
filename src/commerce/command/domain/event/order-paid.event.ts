@@ -1,4 +1,4 @@
-import { DomainEvent } from '../../../common/domain/event/domain-event';
+import { DomainEvent } from '../../../../common/domain/event/domain-event';
 import { PaymentCardInfo } from '../value-object/payment-card-info';
 
 export class OrderPaidEvent extends DomainEvent {

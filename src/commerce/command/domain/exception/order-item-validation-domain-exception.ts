@@ -1,4 +1,4 @@
-import { DomainException } from '../../../common/exception/domain-exception';
+import { DomainException } from '../../../../common/exception/domain-exception';
 
 export class OrderItemValidationDomainException extends DomainException {
   readonly code: string;

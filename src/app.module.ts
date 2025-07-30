@@ -4,12 +4,12 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { CreateOrderCommandHandlerImpl } from './commerce/application/command/handler/create-order-command-handler-impl';
-import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
-import { Order } from './commerce/domain/entity/order.entity';
-import { OrderItem } from './commerce/domain/entity/order-item.entity';
-import { CreateOrderItemCommandHandlerImpl } from './commerce/application/command/handler/create-order-item-command-handler-impl';
-import { OrderResolver } from './commerce/presentation/order.resolver';
+import { CreateOrderCommandHandlerImpl } from './commerce/command/application/handler/create-order-command-handler-impl';
+import { OrderRepositoryImpl } from './commerce/command/infrastructure/repository/order.repository.impl';
+import { Order } from './commerce/command/domain/entity/order.entity';
+import { OrderItem } from './commerce/command/domain/entity/order-item.entity';
+import { CreateOrderItemCommandHandlerImpl } from './commerce/command/application/handler/create-order-item-command-handler-impl';
+import { OrderResolver } from './commerce/command/presentation/order.resolver';
 
 @Module({
   imports: [

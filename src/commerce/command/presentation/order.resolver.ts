@@ -6,8 +6,8 @@ import {
   CreateOrderGqlInput,
   CreateOrderItemGqlInput,
 } from './graphql/create-order.graphql';
-import { CreateOrderCommandHandler } from '../application/command/handler/create-order-command-handler';
-import { CreateOrderItemCommandHandler } from '../application/command/handler/create-order-item-command-handler';
+import { CreateOrderCommandHandler } from '../application/handler/create-order-command-handler';
+import { CreateOrderItemCommandHandler } from '../application/handler/create-order-item-command-handler';
 import { Inject } from '@nestjs/common';
 
 @Resolver(() => OrderGqlObject)

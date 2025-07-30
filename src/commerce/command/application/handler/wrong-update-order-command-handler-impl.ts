@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { OrderRepository } from '../../../domain/repository/order.repository';
+import { OrderRepository } from '../../domain/repository/order.repository';
 
 export class WrongUpdateOrderCommandHandlerImpl {
   constructor(

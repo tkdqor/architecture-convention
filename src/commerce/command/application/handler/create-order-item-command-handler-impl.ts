@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { OrderRepository } from '../../../domain/repository/order.repository';
-import { Order } from '../../../domain/entity/order.entity';
+import { OrderRepository } from '../../domain/repository/order.repository';
+import { Order } from '../../domain/entity/order.entity';
 import { CreateOrderItemCommand } from '../dto/create-order-item.command';
 import { CreateOrderItemCommandHandler } from './create-order-item-command-handler';
 

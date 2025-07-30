@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import AggregateRootEntity from '../../../common/domain/entity/aggregate-root.entity';
+import AggregateRootEntity from '../../../../common/domain/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
@@ -7,8 +7,8 @@ import { OrderItemAlreadyExistsDomainException } from '../exception/order-item-a
 import { PaymentCardInfo } from '../value-object/payment-card-info';
 import { Money } from '../value-object/money';
 import { OrderPaidEvent } from '../event/order-paid.event';
-import { DomainEvent } from '../../../common/domain/event/domain-event';
-import { plainToClassWithValidation } from '../../../common/validation/utils';
+import { DomainEvent } from '../../../../common/domain/event/domain-event';
+import { plainToClassWithValidation } from '../../../../common/validation/utils';
 
 export enum OrderStatusEnum {
   PLACED = 'PLACED',

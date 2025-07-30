@@ -7,8 +7,8 @@ import {
   CreateOrderItemGqlInput,
   CreateOrderItemResultObject,
 } from '../graphql/create-order.graphql';
-import { CreateOrderCommand } from '../../application/command/dto/create-order.command';
-import { CreateOrderItemCommand } from '../../application/command/dto/create-order-item.command';
+import { CreateOrderCommand } from '../../application/dto/create-order.command';
+import { CreateOrderItemCommand } from '../../application/dto/create-order-item.command';
 
 export class OrderMapper {
   /**
