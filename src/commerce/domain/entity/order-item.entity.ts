@@ -10,28 +10,35 @@ import { IsNumber, IsString, Min } from 'class-validator';
 import { OrderItemValidationDomainException } from '../exception/order-item-validation-domain-exception';
 import { Order } from './order.entity';
 import { Money } from '../value-object/money';
-import { EntityValidation } from '../../../common/domain/entity/entity-validation';
+import { Expose } from 'class-transformer';
+import { plainToClassWithValidation } from '../../../common/validation/utils';
 
 @Entity('convention_order_item')
 export class OrderItem extends SubDomainEntity {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Expose()
   @ManyToOne(() => Order)
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
+  @Expose()
   @IsString()
   @Column({ name: 'product_id' })
   productId: string;
 
+  @Expose()
   @IsString()
   @Column({ name: 'product_name' })
   productName: string;
 
+  @Expose()
   @Column(() => Money, { prefix: false })
   price: Money;
 
+  @Expose()
   @IsNumber()
   @Min(0)
   @Column({ type: 'bigint', comment: '주문 상품 수량' })
@@ -78,9 +85,9 @@ export class OrderItem extends SubDomainEntity {
     orderItem.price = price;
     orderItem.quantity = quantity;
 
-    // 타입 검증 진행
-    EntityValidation.validate(orderItem, () => new OrderItem());
-
-    return orderItem;
+    // 타입 검증과 함께 OrderItem 인스턴스 생성
+    return plainToClassWithValidation(OrderItem, orderItem, {
+      excludeExtraneousValues: true,
+    });
   }
 }
