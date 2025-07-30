@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
 import { OrderGqlObject } from './graphql/order.graphql';
 import { OrderMapper } from './mapper/order.mapper';
 import {
@@ -35,6 +35,12 @@ export class OrderResolver {
     const command = OrderMapper.toCreateOrderItemCommand(input);
     const order = await this.createOrderItemICommandHandler.execute(command);
     return OrderMapper.toCreateOrderResultObject(order);
+  }
+
+  // GraphQL 스키마 생성을 위해 필요
+  @Query(() => String, { description: '임시 쿼리' })
+  healthCheck(): string {
+    return 'Server is running!';
   }
 
   // TODO
