@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OrderItemTypeOrmEntity } from './order-item.typeorm-entity';
+import { OrderItemTypeOrmEntity } from './order-item-typeorm-entity';
 import { OrderStatusEnum } from '../../domain/entity/pure-order';
 
 /**

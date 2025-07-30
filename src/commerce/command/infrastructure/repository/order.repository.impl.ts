@@ -3,12 +3,16 @@ import { OrderRepository } from '../../domain/repository/order.repository';
 import { PureOrder } from '../../domain/entity/pure-order';
 import { EntityManager } from 'typeorm';
 import { NotFoundOrderApplicationException } from '../../application/exception/not-found-order-application-exception';
-import { OrderTypeOrmEntity } from '../entity/order.typeorm-entity';
+
 import { OrderMapper } from '../mapper/order.mapper';
+import { OrderTypeOrmEntity } from '../entity/order-typeorm-entity';
 
 @Injectable()
 export class OrderRepositoryImpl implements OrderRepository {
-  async save(entityManager: EntityManager, order: PureOrder): Promise<PureOrder> {
+  async save(
+    entityManager: EntityManager,
+    order: PureOrder,
+  ): Promise<PureOrder> {
     // 도메인 객체 → TypeORM 엔티티 변환
     const orderTypeOrmEntity = OrderMapper.toTypeOrmEntity(order);
 

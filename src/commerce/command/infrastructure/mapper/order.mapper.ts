@@ -2,8 +2,8 @@ import { PureOrder } from '../../domain/entity/pure-order';
 import { PureOrderItem } from '../../domain/entity/pure-order-item';
 import { Money } from '../../domain/value-object/money';
 import { PaymentCardInfo } from '../../domain/value-object/payment-card-info';
-import { OrderTypeOrmEntity } from '../entity/order.typeorm-entity';
-import { OrderItemTypeOrmEntity } from '../entity/order-item.typeorm-entity';
+import { OrderTypeOrmEntity } from '../entity/order-typeorm-entity';
+import { OrderItemTypeOrmEntity } from '../entity/order-item-typeorm-entity';
 
 /**
  * 도메인 Order ↔ TypeORM OrderTypeOrmEntity 변환 매퍼

@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
-import { OrderTypeOrmEntity } from './order.typeorm-entity';
+import { OrderTypeOrmEntity } from './order-typeorm-entity';
 
 /**
  * TypeORM 전용 OrderItem 엔티티

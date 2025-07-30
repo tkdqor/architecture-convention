@@ -6,8 +6,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { CreateOrderCommandHandlerImpl } from './commerce/command/application/handler/create-order-command-handler-impl';
 import { OrderRepositoryImpl } from './commerce/command/infrastructure/repository/order.repository.impl';
-import { OrderTypeOrmEntity } from './commerce/command/infrastructure/entity/order.typeorm-entity';
-import { OrderItemTypeOrmEntity } from './commerce/command/infrastructure/entity/order-item.typeorm-entity';
+import { OrderTypeOrmEntity } from './commerce/command/infrastructure/entity/order-typeorm-entity';
+import { OrderItemTypeOrmEntity } from './commerce/command/infrastructure/entity/order-item-typeorm-entity';
 import { CreateOrderItemCommandHandlerImpl } from './commerce/command/application/handler/create-order-item-command-handler-impl';
 import { OrderResolver } from './commerce/command/presentation/order.resolver';
 
