@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { OrderRepository } from '../../domain/repository/order.repository';
-import { Order } from '../../domain/entity/order.entity';
+import { PureOrder } from '../../domain/entity/pure-order';
 import { CreateOrderItemCommand } from '../dto/create-order-item.command';
 import { CreateOrderItemCommandHandler } from './create-order-item-command-handler';
 
@@ -15,7 +15,7 @@ export class CreateOrderItemCommandHandlerImpl
     private readonly orderRepository: OrderRepository,
   ) {}
 
-  async execute(command: CreateOrderItemCommand): Promise<Order> {
+  async execute(command: CreateOrderItemCommand): Promise<PureOrder> {
     return await this.dataSource.transaction(async (entityManager) => {
       const order = await this.orderRepository.getById(
         entityManager,

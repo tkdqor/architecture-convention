@@ -1,6 +1,6 @@
 import { CreateOrderCommand } from '../dto/create-order.command';
-import { Order } from '../../domain/entity/order.entity';
+import { PureOrder } from '../../domain/entity/pure-order';
 
 export interface CreateOrderCommandHandler {
-  execute(command: CreateOrderCommand): Promise<Order>;
+  execute(command: CreateOrderCommand): Promise<PureOrder>;
 }

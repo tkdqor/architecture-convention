@@ -1,5 +1,5 @@
-import { Order, OrderStatusEnum } from '../../domain/entity/order.entity';
-import { OrderItem } from '../../domain/entity/order-item.entity';
+import { PureOrder, OrderStatusEnum } from '../../domain/entity/pure-order';
+import { PureOrderItem } from '../../domain/entity/pure-order-item';
 import { OrderStatusGqlEnum } from '../graphql/order.graphql';
 import {
   CreateOrderGqlInput,
@@ -34,13 +34,13 @@ export class OrderMapper {
   /**
    * Order 엔티티를 CreateOrderResultObject로 변환
    */
-  static toCreateOrderResultObject(order: Order): CreateOrderResultObject {
+  static toCreateOrderResultObject(order: PureOrder): CreateOrderResultObject {
     return new CreateOrderResultObject({
       id: order.id,
       customerId: order.customerId,
       status: this.mapOrderStatusToGql(order.status),
       totalAmount: order.totalAmount.value,
-      items: this.toCreateOrderItemResultObjects(order.items),
+      items: this.toCreateOrderItemResultObjects(Array.from(order.items)),
       message: 'Order created successfully',
       createdAt: new Date(),
     });
@@ -50,7 +50,7 @@ export class OrderMapper {
    * OrderItem 엔티티를 CreateOrderItemResultObject로 변환
    */
   static toCreateOrderItemResultObject(
-    orderItem: OrderItem,
+    orderItem: PureOrderItem,
   ): CreateOrderItemResultObject {
     return new CreateOrderItemResultObject({
       id: orderItem.id,
@@ -67,7 +67,7 @@ export class OrderMapper {
    * OrderItem 엔티티 배열을 CreateOrderItemResultObject 배열로 변환
    */
   static toCreateOrderItemResultObjects(
-    orderItems: OrderItem[],
+    orderItems: PureOrderItem[],
   ): CreateOrderItemResultObject[] {
     return orderItems.map((orderItem) =>
       this.toCreateOrderItemResultObject(orderItem),

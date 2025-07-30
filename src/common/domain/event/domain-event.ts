@@ -2,11 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export abstract class DomainEvent {
   eventId: string;
-  entityId: string;
+  entityId: string | undefined;
   eventType: string;
   occurredAt: Date;
 
-  protected constructor(aggregateId: string, eventType: string) {
+  protected constructor(aggregateId: string | undefined, eventType: string) {
     this.eventId = uuidv4();
     this.entityId = aggregateId;
     this.eventType = eventType;

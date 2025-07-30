@@ -6,7 +6,7 @@ export class OrderPaidEvent extends DomainEvent {
   paymentCardInfo: PaymentCardInfo;
 
   constructor(
-    entityId: string,
+    entityId: string | undefined,
     amount: number,
     paymentCardInfo: PaymentCardInfo,
   ) {
