@@ -1,7 +1,9 @@
 import { IsNumber, Min } from 'class-validator';
 import { Column } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 export class Money {
+  @Expose()
   @IsNumber()
   @Min(0)
   @Column({ name: 'amount', type: 'bigint', comment: '금액' })

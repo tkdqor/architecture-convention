@@ -1,14 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import AggregateRootEntity from '../../../common/domain/entity/aggregate-root.entity';
 import { IsArray, IsEnum, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-import { EntityValidation } from '../../../common/domain/entity/entity-validation';
+import { Expose, Type } from 'class-transformer';
 import { OrderItem } from './order-item.entity';
 import { OrderItemAlreadyExistsDomainException } from '../exception/order-item-already-exists-domain-exception';
 import { PaymentCardInfo } from '../value-object/payment-card-info';
 import { Money } from '../value-object/money';
 import { OrderPaidEvent } from '../event/order-paid.event';
 import { DomainEvent } from '../../../common/domain/event/domain-event';
+import { plainToClassWithValidation } from '../../../common/validation/utils';
 
 export enum OrderStatusEnum {
   PLACED = 'PLACED',
@@ -36,13 +36,16 @@ export interface AddPaymentCardInfoParams {
 
 @Entity('convention_order')
 export class Order extends AggregateRootEntity {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Expose()
   @IsString()
   @Column({ name: 'customer_id' })
   customerId: string; // 서로 다른 Aggregate인 경우 ID 참조
 
+  @Expose()
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order, {
     eager: true,
   })
@@ -51,6 +54,7 @@ export class Order extends AggregateRootEntity {
   @Type(() => OrderItem)
   items: OrderItem[];
 
+  @Expose()
   @IsEnum(OrderStatusEnum)
   @Column({
     type: 'enum',
@@ -59,16 +63,18 @@ export class Order extends AggregateRootEntity {
   })
   status: OrderStatusEnum;
 
+  @Expose()
   @Column(() => Money, { prefix: false })
   totalAmount: Money; // 모든 품목의 총합과 일치해야 함
 
+  @Expose()
   @Column(() => PaymentCardInfo, { prefix: false })
   paymentCardInfo: PaymentCardInfo;
 
+  @Expose()
   domainEvents: DomainEvent[] = [];
 
-  // protected 생성자: TypeORM 호환성 유지 + 외부 접근 제한
-  protected constructor() {
+  constructor() {
     super();
   }
 
@@ -79,9 +85,11 @@ export class Order extends AggregateRootEntity {
     order.items = [];
     order.totalAmount = Money.createMoney(0);
     order.customerId = params.customerId;
-    // 타입 검증 진행
-    EntityValidation.validate(order, () => new Order());
-    return order;
+
+    // 타입 검증과 함께 Order 인스턴스 생성
+    return plainToClassWithValidation(Order, order, {
+      excludeExtraneousValues: true,
+    });
   }
 
   // 애그리거트 루트를 통한 OrderItem 추가 (일관성 유지)

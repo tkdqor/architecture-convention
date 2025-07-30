@@ -17,7 +17,6 @@ export class CreateOrderCommandHandlerImpl
 
   async execute(command: CreateOrderCommand): Promise<Order> {
     const entityManager = this.dataSource.manager;
-    // const order = new Order(); 불가능
     const order = Order.createOrder({ customerId: command.customerId });
     return await this.orderRepository.save(entityManager, order);
   }

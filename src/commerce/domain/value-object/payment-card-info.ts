@@ -1,15 +1,20 @@
 import { Column } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 export class PaymentCardInfo {
+  @Expose()
   @Column({ name: 'card_number', type: 'varchar', length: 100 })
   cardNumber: string;
 
+  @Expose()
   @Column({ name: 'card_holder', type: 'varchar', length: 100 })
   cardHolder: string;
 
+  @Expose()
   @Column({ type: 'varchar', length: 5 })
   expiry: string;
 
+  @Expose()
   @Column({ type: 'varchar', length: 4 })
   cvc: string;
 
