@@ -14,9 +14,9 @@ import { Inject } from '@nestjs/common';
 export class OrderResolver {
   constructor(
     @Inject('CreateOrderICommandHandler')
-    private readonly createOrderICommandHandler: CreateOrderCommandHandler,
+    private readonly createOrderCommandHandler: CreateOrderCommandHandler,
     @Inject('CreateOrderItemICommandHandler')
-    private readonly createOrderItemICommandHandler: CreateOrderItemCommandHandler,
+    private readonly createOrderItemCommandHandler: CreateOrderItemCommandHandler,
   ) {}
 
   @Mutation(() => CreateOrderResultObject, { description: '주문 생성' })
@@ -24,7 +24,7 @@ export class OrderResolver {
     @Args('input') input: CreateOrderGqlInput,
   ): Promise<CreateOrderResultObject> {
     const command = OrderMapper.toCreateOrderCommand(input);
-    const order = await this.createOrderICommandHandler.execute(command);
+    const order = await this.createOrderCommandHandler.execute(command);
     return OrderMapper.toCreateOrderResultObject(order);
   }
 
@@ -33,7 +33,7 @@ export class OrderResolver {
     @Args('input') input: CreateOrderItemGqlInput,
   ): Promise<CreateOrderResultObject> {
     const command = OrderMapper.toCreateOrderItemCommand(input);
-    const order = await this.createOrderItemICommandHandler.execute(command);
+    const order = await this.createOrderItemCommandHandler.execute(command);
     return OrderMapper.toCreateOrderResultObject(order);
   }
 
