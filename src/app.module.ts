@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ScheduleModule } from '@nestjs/schedule';
 import { CreateOrderCommandHandlerImpl } from './commerce/application/command/handler/create-order-command-handler-impl';
 import { OrderRepositoryImpl } from './commerce/infrastructure/repository/command/order.repository.impl';
 import { Order } from './commerce/domain/entity/order.entity';
@@ -14,7 +13,6 @@ import { OrderResolver } from './commerce/presentation/order.resolver';
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
