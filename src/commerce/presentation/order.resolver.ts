@@ -41,9 +41,10 @@ export class OrderResolver {
     return OrderMapper.toCreateOrderResultObject(order);
   }
 
-  @Query(() => GetOrderDetailGqlPayload, { description: '주문 상세 조회' })
-  async getOrderDetail(): Promise<GetOrderDetailGqlPayload> {
-    const order = await this.getOrderDetailUseCase.execute();
-    return OrderMapper.toGetOrderDetailGqlPayload(order);
-  }
+  // TODO
+  // @Query(() => GetOrderDetailGqlPayload, { description: '주문 상세 조회' })
+  // async getOrderDetail(): Promise<GetOrderDetailGqlPayload> {
+  //   const order = await this.getOrderDetailUseCase.execute();
+  //   return OrderMapper.toGetOrderDetailGqlPayload(order);
+  // }
 }
