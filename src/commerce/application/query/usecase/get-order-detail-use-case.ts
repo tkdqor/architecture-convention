@@ -1,5 +1,7 @@
-import { OrderReadModel } from '../../../infrastructure/readmodel/order.read-model';
+// TODO
 
-export interface GetOrderDetailUseCase {
-  execute(): Promise<OrderReadModel>;
-}
+// import { OrderReadModel } from '../../../infrastructure/readmodel/order.read-model';
+//
+// export interface GetOrderDetailUseCase {
+//   execute(): Promise<OrderReadModel>;
+// }
